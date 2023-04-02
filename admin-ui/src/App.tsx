@@ -9,14 +9,18 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
-import { CustomerList } from "./customer/CustomerList";
-import { CustomerCreate } from "./customer/CustomerCreate";
-import { CustomerEdit } from "./customer/CustomerEdit";
-import { CustomerShow } from "./customer/CustomerShow";
-import { AddressList } from "./address/AddressList";
-import { AddressCreate } from "./address/AddressCreate";
-import { AddressEdit } from "./address/AddressEdit";
-import { AddressShow } from "./address/AddressShow";
+import { BranchList } from "./branch/BranchList";
+import { BranchCreate } from "./branch/BranchCreate";
+import { BranchEdit } from "./branch/BranchEdit";
+import { BranchShow } from "./branch/BranchShow";
+import { EventList } from "./event/EventList";
+import { EventCreate } from "./event/EventCreate";
+import { EventEdit } from "./event/EventEdit";
+import { EventShow } from "./event/EventShow";
+import { EventRegistrationList } from "./eventRegistration/EventRegistrationList";
+import { EventRegistrationCreate } from "./eventRegistration/EventRegistrationCreate";
+import { EventRegistrationEdit } from "./eventRegistration/EventRegistrationEdit";
+import { EventRegistrationShow } from "./eventRegistration/EventRegistrationShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -51,18 +55,25 @@ const App = (): React.ReactElement => {
           show={UserShow}
         />
         <Resource
-          name="Customer"
-          list={CustomerList}
-          edit={CustomerEdit}
-          create={CustomerCreate}
-          show={CustomerShow}
+          name="Branch"
+          list={BranchList}
+          edit={BranchEdit}
+          create={BranchCreate}
+          show={BranchShow}
         />
         <Resource
-          name="Address"
-          list={AddressList}
-          edit={AddressEdit}
-          create={AddressCreate}
-          show={AddressShow}
+          name="Event"
+          list={EventList}
+          edit={EventEdit}
+          create={EventCreate}
+          show={EventShow}
+        />
+        <Resource
+          name="EventRegistration"
+          list={EventRegistrationList}
+          edit={EventRegistrationEdit}
+          create={EventRegistrationCreate}
+          show={EventRegistrationShow}
         />
       </Admin>
     </div>

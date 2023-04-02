@@ -11,12 +11,37 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, IsJSON } from "class-validator";
+import { IsString, IsOptional, ValidateNested, IsJSON } from "class-validator";
+import { EventRegistrationUpdateManyWithoutUsersInput } from "./EventRegistrationUpdateManyWithoutUsersInput";
+import { Type } from "class-transformer";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
 
 @InputType()
 class UserUpdateInput {
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  email?: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => EventRegistrationUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => EventRegistrationUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => EventRegistrationUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  eventRegistrations?: EventRegistrationUpdateManyWithoutUsersInput;
+
   @ApiProperty({
     required: false,
     type: String,
@@ -70,6 +95,17 @@ class UserUpdateInput {
     nullable: true,
   })
   username?: string;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  usn?: string;
 }
 
 export { UserUpdateInput as UserUpdateInput };

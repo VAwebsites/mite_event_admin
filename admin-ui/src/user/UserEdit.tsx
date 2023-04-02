@@ -1,18 +1,31 @@
 import * as React from "react";
+
 import {
   Edit,
   SimpleForm,
   EditProps,
   TextInput,
-  PasswordInput,
+  ReferenceArrayInput,
   SelectArrayInput,
+  PasswordInput,
 } from "react-admin";
+
+import { EventRegistrationTitle } from "../eventRegistration/EventRegistrationTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const UserEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
+        <TextInput label="Email" source="email" type="email" />
+        <ReferenceArrayInput
+          source="eventRegistrations"
+          reference="EventRegistration"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={EventRegistrationTitle} />
+        </ReferenceArrayInput>
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
         <PasswordInput label="Password" source="password" />
@@ -23,6 +36,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           optionValue="value"
         />
         <TextInput label="Username" source="username" />
+        <TextInput label="USN" source="usn" />
       </SimpleForm>
     </Edit>
   );
