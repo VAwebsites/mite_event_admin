@@ -30,7 +30,7 @@ async function seed(bcryptSalt: Salt) {
     password: await hash("admin", bcryptSalt),
     roles: ["user"],
     email: "example@example.com",
-    usn: "4MI2929",
+    usn: "",
   };
 
   await client.user.upsert({
