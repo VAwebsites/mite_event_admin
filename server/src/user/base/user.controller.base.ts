@@ -27,6 +27,9 @@ import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserUpdateInput } from "./UserUpdateInput";
 import { User } from "./User";
+import { EventRegistrationFindManyArgs } from "../../eventRegistration/base/EventRegistrationFindManyArgs";
+import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
+import { EventRegistrationWhereUniqueInput } from "../../eventRegistration/base/EventRegistrationWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -51,12 +54,14 @@ export class UserControllerBase {
       data: data,
       select: {
         createdAt: true,
+        email: true,
         firstName: true,
         id: true,
         lastName: true,
         roles: true,
         updatedAt: true,
         username: true,
+        usn: true,
       },
     });
   }
@@ -79,12 +84,14 @@ export class UserControllerBase {
       ...args,
       select: {
         createdAt: true,
+        email: true,
         firstName: true,
         id: true,
         lastName: true,
         roles: true,
         updatedAt: true,
         username: true,
+        usn: true,
       },
     });
   }
@@ -108,12 +115,14 @@ export class UserControllerBase {
       where: params,
       select: {
         createdAt: true,
+        email: true,
         firstName: true,
         id: true,
         lastName: true,
         roles: true,
         updatedAt: true,
         username: true,
+        usn: true,
       },
     });
     if (result === null) {
@@ -146,12 +155,14 @@ export class UserControllerBase {
         data: data,
         select: {
           createdAt: true,
+          email: true,
           firstName: true,
           id: true,
           lastName: true,
           roles: true,
           updatedAt: true,
           username: true,
+          usn: true,
         },
       });
     } catch (error) {
@@ -183,12 +194,14 @@ export class UserControllerBase {
         where: params,
         select: {
           createdAt: true,
+          email: true,
           firstName: true,
           id: true,
           lastName: true,
           roles: true,
           updatedAt: true,
           username: true,
+          usn: true,
         },
       });
     } catch (error) {
@@ -199,5 +212,113 @@ export class UserControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/eventRegistrations")
+  @ApiNestedQuery(EventRegistrationFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "EventRegistration",
+    action: "read",
+    possession: "any",
+  })
+  async findManyEventRegistrations(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<EventRegistration[]> {
+    const query = plainToClass(EventRegistrationFindManyArgs, request.query);
+    const results = await this.service.findEventRegistrations(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+
+        event: {
+          select: {
+            id: true,
+          },
+        },
+
+        id: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/eventRegistrations")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectEventRegistrations(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: EventRegistrationWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      eventRegistrations: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/eventRegistrations")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateEventRegistrations(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: EventRegistrationWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      eventRegistrations: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/eventRegistrations")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectEventRegistrations(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: EventRegistrationWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      eventRegistrations: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }
