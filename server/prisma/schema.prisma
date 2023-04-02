@@ -41,12 +41,3 @@ model Address {
   updatedAt DateTime   @updatedAt
   zip       Int?
 }
-
-model Product {
-  createdAt   DateTime @default(now())
-  description String?
-  id          String   @id @default(auto()) @map("_id") @mongo.ObjectId
-  itemPrice   Float?
-  name        String?
-  updatedAt   DateTime @updatedAt
-}
