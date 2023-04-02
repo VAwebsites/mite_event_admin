@@ -11,12 +11,34 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, IsJSON } from "class-validator";
+import { IsString, ValidateNested, IsOptional, IsJSON } from "class-validator";
+import { EventRegistrationCreateNestedManyWithoutUsersInput } from "./EventRegistrationCreateNestedManyWithoutUsersInput";
+import { Type } from "class-transformer";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
 
 @InputType()
 class UserCreateInput {
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  email!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => EventRegistrationCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => EventRegistrationCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => EventRegistrationCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  eventRegistrations?: EventRegistrationCreateNestedManyWithoutUsersInput;
+
   @ApiProperty({
     required: false,
     type: String,
@@ -61,6 +83,14 @@ class UserCreateInput {
   @IsString()
   @Field(() => String)
   username!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  usn!: string;
 }
 
 export { UserCreateInput as UserCreateInput };

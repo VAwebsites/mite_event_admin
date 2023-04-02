@@ -11,8 +11,15 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional, IsJSON } from "class-validator";
+import {
+  IsDate,
+  IsString,
+  ValidateNested,
+  IsOptional,
+  IsJSON,
+} from "class-validator";
 import { Type } from "class-transformer";
+import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
 
@@ -25,6 +32,23 @@ class User {
   @Type(() => Date)
   @Field(() => Date)
   createdAt!: Date;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  email!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => [EventRegistration],
+  })
+  @ValidateNested()
+  @Type(() => EventRegistration)
+  @IsOptional()
+  eventRegistrations?: Array<EventRegistration>;
 
   @ApiProperty({
     required: false,
@@ -78,6 +102,14 @@ class User {
   @IsString()
   @Field(() => String)
   username!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  usn!: string;
 }
 
 export { User as User };

@@ -25,6 +25,8 @@ import { DeleteUserArgs } from "./DeleteUserArgs";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
+import { EventRegistrationFindManyArgs } from "../../eventRegistration/base/EventRegistrationFindManyArgs";
+import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -133,5 +135,25 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [EventRegistration])
+  @nestAccessControl.UseRoles({
+    resource: "EventRegistration",
+    action: "read",
+    possession: "any",
+  })
+  async eventRegistrations(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: EventRegistrationFindManyArgs
+  ): Promise<EventRegistration[]> {
+    const results = await this.service.findEventRegistrations(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 }
