@@ -4,6 +4,10 @@ export const ROLES = [
     displayName: "Super Admin",
   },
   {
+    name: "eventManager",
+    displayName: "Event Manager",
+  },
+  {
     name: "user",
     displayName: "User",
   },

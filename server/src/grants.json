@@ -1,12 +1,12 @@
 [
   {
-    "role": "superAdmin",
+    "role": "eventManager",
     "resource": "User",
     "action": "read:own",
     "attributes": "*"
   },
   {
-    "role": "user",
+    "role": "superAdmin",
     "resource": "User",
     "action": "read:own",
     "attributes": "*"
@@ -18,31 +18,13 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
     "role": "superAdmin",
     "resource": "User",
     "action": "update:any",
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "User",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
     "role": "superAdmin",
-    "resource": "User",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
     "resource": "User",
     "action": "delete:any",
     "attributes": "*"
@@ -54,19 +36,13 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "User",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
+    "role": "eventManager",
     "resource": "Branch",
     "action": "read:own",
     "attributes": "*"
   },
   {
-    "role": "user",
+    "role": "superAdmin",
     "resource": "Branch",
     "action": "read:own",
     "attributes": "*"
@@ -78,19 +54,7 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Branch",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
     "role": "superAdmin",
-    "resource": "Branch",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
     "resource": "Branch",
     "action": "update:any",
     "attributes": "*"
@@ -102,19 +66,7 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Branch",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
     "role": "superAdmin",
-    "resource": "Branch",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
     "resource": "Branch",
     "action": "read:any",
     "attributes": "*"
@@ -126,19 +78,7 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Event",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
     "role": "superAdmin",
-    "resource": "Event",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
     "resource": "Event",
     "action": "create:any",
     "attributes": "*"
@@ -150,19 +90,7 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Event",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
     "role": "superAdmin",
-    "resource": "Event",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
     "resource": "Event",
     "action": "delete:any",
     "attributes": "*"
@@ -174,9 +102,9 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "Event",
-    "action": "read:any",
+    "role": "eventManager",
+    "resource": "EventRegistration",
+    "action": "read:own",
     "attributes": "*"
   },
   {
@@ -186,9 +114,9 @@
     "attributes": "*"
   },
   {
-    "role": "user",
+    "role": "eventManager",
     "resource": "EventRegistration",
-    "action": "read:own",
+    "action": "create:any",
     "attributes": "*"
   },
   {
@@ -198,9 +126,9 @@
     "attributes": "*"
   },
   {
-    "role": "user",
+    "role": "eventManager",
     "resource": "EventRegistration",
-    "action": "create:any",
+    "action": "update:any",
     "attributes": "*"
   },
   {
@@ -210,9 +138,9 @@
     "attributes": "*"
   },
   {
-    "role": "user",
+    "role": "eventManager",
     "resource": "EventRegistration",
-    "action": "update:any",
+    "action": "delete:any",
     "attributes": "*"
   },
   {
@@ -222,19 +150,13 @@
     "attributes": "*"
   },
   {
-    "role": "user",
-    "resource": "EventRegistration",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
+    "role": "eventManager",
     "resource": "EventRegistration",
     "action": "read:any",
     "attributes": "*"
   },
   {
-    "role": "user",
+    "role": "superAdmin",
     "resource": "EventRegistration",
     "action": "read:any",
     "attributes": "*"
