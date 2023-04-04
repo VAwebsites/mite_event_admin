@@ -2,58 +2,43 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Address {
-  address_1: String
-  address_2: String
-  city: String
+type Branch {
   createdAt: DateTime!
-  customers(orderBy: [CustomerOrderByInput!], skip: Float, take: Float, where: CustomerWhereInput): [Customer!]!
+  events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
   id: String!
-  state: String
+  img: String!
+  name: String!
   updatedAt: DateTime!
-  zip: Float
 }
 
-input AddressCreateInput {
-  address_1: String
-  address_2: String
-  city: String
-  customers: CustomerCreateNestedManyWithoutAddressesInput
-  state: String
-  zip: Float
+input BranchCreateInput {
+  events: EventCreateNestedManyWithoutBranchesInput
+  img: String!
+  name: String!
 }
 
-input AddressOrderByInput {
-  address_1: SortOrder
-  address_2: SortOrder
-  city: SortOrder
+input BranchOrderByInput {
   createdAt: SortOrder
   id: SortOrder
-  state: SortOrder
+  img: SortOrder
+  name: SortOrder
   updatedAt: SortOrder
-  zip: SortOrder
 }
 
-input AddressUpdateInput {
-  address_1: String
-  address_2: String
-  city: String
-  customers: CustomerUpdateManyWithoutAddressesInput
-  state: String
-  zip: Float
+input BranchUpdateInput {
+  events: EventUpdateManyWithoutBranchesInput
+  img: String
+  name: String
 }
 
-input AddressWhereInput {
-  address_1: StringNullableFilter
-  address_2: StringNullableFilter
-  city: StringNullableFilter
-  customers: CustomerListRelationFilter
+input BranchWhereInput {
+  events: EventListRelationFilter
   id: StringFilter
-  state: StringNullableFilter
-  zip: IntNullableFilter
+  img: StringFilter
+  name: StringFilter
 }
 
-input AddressWhereUniqueInput {
+input BranchWhereUniqueInput {
   id: String!
 }
 
@@ -62,87 +47,163 @@ input Credentials {
   username: String!
 }
 
-type Customer {
-  address: Address
-  createdAt: DateTime!
-  email: String
-  firstName: String
-  id: String!
-  lastName: String
-  phone: String
-  updatedAt: DateTime!
-}
-
-input CustomerCreateInput {
-  address: AddressWhereUniqueInput
-  email: String
-  firstName: String
-  lastName: String
-  phone: String
-}
-
-input CustomerCreateNestedManyWithoutAddressesInput {
-  connect: [CustomerWhereUniqueInput!]
-}
-
-input CustomerListRelationFilter {
-  every: CustomerWhereInput
-  none: CustomerWhereInput
-  some: CustomerWhereInput
-}
-
-input CustomerOrderByInput {
-  addressId: SortOrder
-  createdAt: SortOrder
-  email: SortOrder
-  firstName: SortOrder
-  id: SortOrder
-  lastName: SortOrder
-  phone: SortOrder
-  updatedAt: SortOrder
-}
-
-input CustomerUpdateInput {
-  address: AddressWhereUniqueInput
-  email: String
-  firstName: String
-  lastName: String
-  phone: String
-}
-
-input CustomerUpdateManyWithoutAddressesInput {
-  connect: [CustomerWhereUniqueInput!]
-  disconnect: [CustomerWhereUniqueInput!]
-  set: [CustomerWhereUniqueInput!]
-}
-
-input CustomerWhereInput {
-  address: AddressWhereUniqueInput
-  email: StringNullableFilter
-  firstName: StringNullableFilter
-  id: StringFilter
-  lastName: StringNullableFilter
-  phone: StringNullableFilter
-}
-
-input CustomerWhereUniqueInput {
-  id: String!
-}
-
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
-input IntNullableFilter {
-  equals: Int
-  gt: Int
-  gte: Int
-  in: [Int!]
-  lt: Int
-  lte: Int
-  not: Int
-  notIn: [Int!]
+input DateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+
+type Event {
+  branch: Branch
+  createdAt: DateTime!
+  description: String
+  endDate: DateTime
+  eventRegistrations(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): [EventRegistration!]!
+  id: String!
+  img: String
+  startDate: DateTime
+  title: String
+  updatedAt: DateTime!
+  venue: String
+}
+
+input EventCreateInput {
+  branch: BranchWhereUniqueInput!
+  description: String
+  endDate: DateTime
+  eventRegistrations: EventRegistrationCreateNestedManyWithoutEventsInput
+  img: String
+  startDate: DateTime
+  title: String
+  venue: String
+}
+
+input EventCreateNestedManyWithoutBranchesInput {
+  connect: [EventWhereUniqueInput!]
+}
+
+input EventListRelationFilter {
+  every: EventWhereInput
+  none: EventWhereInput
+  some: EventWhereInput
+}
+
+input EventOrderByInput {
+  branchId: SortOrder
+  createdAt: SortOrder
+  description: SortOrder
+  endDate: SortOrder
+  id: SortOrder
+  img: SortOrder
+  startDate: SortOrder
+  title: SortOrder
+  updatedAt: SortOrder
+  venue: SortOrder
+}
+
+type EventRegistration {
+  createdAt: DateTime!
+  event: Event
+  id: String!
+  updatedAt: DateTime!
+  user: User
+}
+
+input EventRegistrationCreateInput {
+  event: EventWhereUniqueInput!
+  user: UserWhereUniqueInput!
+}
+
+input EventRegistrationCreateNestedManyWithoutEventsInput {
+  connect: [EventRegistrationWhereUniqueInput!]
+}
+
+input EventRegistrationCreateNestedManyWithoutUsersInput {
+  connect: [EventRegistrationWhereUniqueInput!]
+}
+
+input EventRegistrationListRelationFilter {
+  every: EventRegistrationWhereInput
+  none: EventRegistrationWhereInput
+  some: EventRegistrationWhereInput
+}
+
+input EventRegistrationOrderByInput {
+  createdAt: SortOrder
+  eventId: SortOrder
+  id: SortOrder
+  updatedAt: SortOrder
+  userId: SortOrder
+}
+
+input EventRegistrationUpdateInput {
+  event: EventWhereUniqueInput
+  user: UserWhereUniqueInput
+}
+
+input EventRegistrationUpdateManyWithoutEventsInput {
+  connect: [EventRegistrationWhereUniqueInput!]
+  disconnect: [EventRegistrationWhereUniqueInput!]
+  set: [EventRegistrationWhereUniqueInput!]
+}
+
+input EventRegistrationUpdateManyWithoutUsersInput {
+  connect: [EventRegistrationWhereUniqueInput!]
+  disconnect: [EventRegistrationWhereUniqueInput!]
+  set: [EventRegistrationWhereUniqueInput!]
+}
+
+input EventRegistrationWhereInput {
+  event: EventWhereUniqueInput
+  id: StringFilter
+  user: UserWhereUniqueInput
+}
+
+input EventRegistrationWhereUniqueInput {
+  id: String!
+}
+
+input EventUpdateInput {
+  branch: BranchWhereUniqueInput
+  description: String
+  endDate: DateTime
+  eventRegistrations: EventRegistrationUpdateManyWithoutEventsInput
+  img: String
+  startDate: DateTime
+  title: String
+  venue: String
+}
+
+input EventUpdateManyWithoutBranchesInput {
+  connect: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+}
+
+input EventWhereInput {
+  branch: BranchWhereUniqueInput
+  description: StringNullableFilter
+  endDate: DateTimeNullableFilter
+  eventRegistrations: EventRegistrationListRelationFilter
+  id: StringFilter
+  img: StringNullableFilter
+  startDate: DateTimeNullableFilter
+  title: StringNullableFilter
+  venue: StringNullableFilter
+}
+
+input EventWhereUniqueInput {
+  id: String!
 }
 
 """
@@ -155,26 +216,32 @@ type MetaQueryPayload {
 }
 
 type Mutation {
-  createAddress(data: AddressCreateInput!): Address!
-  createCustomer(data: CustomerCreateInput!): Customer!
+  createBranch(data: BranchCreateInput!): Branch!
+  createEvent(data: EventCreateInput!): Event!
+  createEventRegistration(data: EventRegistrationCreateInput!): EventRegistration!
   createUser(data: UserCreateInput!): User!
-  deleteAddress(where: AddressWhereUniqueInput!): Address!
-  deleteCustomer(where: CustomerWhereUniqueInput!): Customer!
+  deleteBranch(where: BranchWhereUniqueInput!): Branch!
+  deleteEvent(where: EventWhereUniqueInput!): Event!
+  deleteEventRegistration(where: EventRegistrationWhereUniqueInput!): EventRegistration!
   deleteUser(where: UserWhereUniqueInput!): User!
   login(credentials: Credentials!): UserInfo!
-  updateAddress(data: AddressUpdateInput!, where: AddressWhereUniqueInput!): Address!
-  updateCustomer(data: CustomerUpdateInput!, where: CustomerWhereUniqueInput!): Customer!
+  updateBranch(data: BranchUpdateInput!, where: BranchWhereUniqueInput!): Branch!
+  updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event!
+  updateEventRegistration(data: EventRegistrationUpdateInput!, where: EventRegistrationWhereUniqueInput!): EventRegistration!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
 }
 
 type Query {
-  _addressesMeta(orderBy: [AddressOrderByInput!], skip: Float, take: Float, where: AddressWhereInput): MetaQueryPayload!
-  _customersMeta(orderBy: [CustomerOrderByInput!], skip: Float, take: Float, where: CustomerWhereInput): MetaQueryPayload!
+  _branchesMeta(orderBy: [BranchOrderByInput!], skip: Float, take: Float, where: BranchWhereInput): MetaQueryPayload!
+  _eventRegistrationsMeta(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): MetaQueryPayload!
+  _eventsMeta(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): MetaQueryPayload!
   _usersMeta(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): MetaQueryPayload!
-  address(where: AddressWhereUniqueInput!): Address
-  addresses(orderBy: [AddressOrderByInput!], skip: Float, take: Float, where: AddressWhereInput): [Address!]!
-  customer(where: CustomerWhereUniqueInput!): Customer
-  customers(orderBy: [CustomerOrderByInput!], skip: Float, take: Float, where: CustomerWhereInput): [Customer!]!
+  branch(where: BranchWhereUniqueInput!): Branch
+  branches(orderBy: [BranchOrderByInput!], skip: Float, take: Float, where: BranchWhereInput): [Branch!]!
+  event(where: EventWhereUniqueInput!): Event
+  eventRegistration(where: EventRegistrationWhereUniqueInput!): EventRegistration
+  eventRegistrations(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): [EventRegistration!]!
+  events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
   user(where: UserWhereUniqueInput!): User
   userInfo: UserInfo!
   users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
@@ -222,23 +289,26 @@ input StringNullableFilter {
 
 type User {
   createdAt: DateTime!
+  email: String!
+  eventRegistrations(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): [EventRegistration!]!
   firstName: String
   id: String!
   lastName: String
   roles: JSON!
   updatedAt: DateTime!
   username: String!
+  usn: String!
 }
 
 input UserCreateInput {
+  email: String!
+  eventRegistrations: EventRegistrationCreateNestedManyWithoutUsersInput
   firstName: String
   lastName: String
   password: String!
   roles: JSON!
   username: String!
   usn: String!
-  email: String!
-  id: String!
 }
 
 type UserInfo {
@@ -250,6 +320,7 @@ type UserInfo {
 
 input UserOrderByInput {
   createdAt: SortOrder
+  email: SortOrder
   firstName: SortOrder
   id: SortOrder
   lastName: SortOrder
@@ -257,21 +328,28 @@ input UserOrderByInput {
   roles: SortOrder
   updatedAt: SortOrder
   username: SortOrder
+  usn: SortOrder
 }
 
 input UserUpdateInput {
+  email: String
+  eventRegistrations: EventRegistrationUpdateManyWithoutUsersInput
   firstName: String
   lastName: String
   password: String
   roles: JSON
   username: String
+  usn: String
 }
 
 input UserWhereInput {
+  email: StringFilter
+  eventRegistrations: EventRegistrationListRelationFilter
   firstName: StringNullableFilter
   id: StringFilter
   lastName: StringNullableFilter
   username: StringFilter
+  usn: StringFilter
 }
 
 input UserWhereUniqueInput {
