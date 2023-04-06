@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { EventCreateNestedManyWithoutBranchesInput } from "./EventCreateNestedManyWithoutBranchesInput";
 import { ValidateNested, IsOptional, IsString } from "class-validator";
 import { Type } from "class-transformer";
+import { UserCreateNestedManyWithoutBranchesInput } from "./UserCreateNestedManyWithoutBranchesInput";
 
 @InputType()
 class BranchCreateInput {
@@ -44,6 +45,18 @@ class BranchCreateInput {
   @IsString()
   @Field(() => String)
   name!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserCreateNestedManyWithoutBranchesInput,
+  })
+  @ValidateNested()
+  @Type(() => UserCreateNestedManyWithoutBranchesInput)
+  @IsOptional()
+  @Field(() => UserCreateNestedManyWithoutBranchesInput, {
+    nullable: true,
+  })
+  users?: UserCreateNestedManyWithoutBranchesInput;
 }
 
 export { BranchCreateInput as BranchCreateInput };

@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { EventUpdateManyWithoutBranchesInput } from "./EventUpdateManyWithoutBranchesInput";
 import { ValidateNested, IsOptional, IsString } from "class-validator";
 import { Type } from "class-transformer";
+import { UserUpdateManyWithoutBranchesInput } from "./UserUpdateManyWithoutBranchesInput";
 
 @InputType()
 class BranchUpdateInput {
@@ -50,6 +51,18 @@ class BranchUpdateInput {
     nullable: true,
   })
   name?: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserUpdateManyWithoutBranchesInput,
+  })
+  @ValidateNested()
+  @Type(() => UserUpdateManyWithoutBranchesInput)
+  @IsOptional()
+  @Field(() => UserUpdateManyWithoutBranchesInput, {
+    nullable: true,
+  })
+  users?: UserUpdateManyWithoutBranchesInput;
 }
 
 export { BranchUpdateInput as BranchUpdateInput };

@@ -21,6 +21,7 @@ import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { UserService } from "../user.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { UserCreateInput } from "./UserCreateInput";
 import { UserWhereInput } from "./UserWhereInput";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
@@ -51,8 +52,22 @@ export class UserControllerBase {
   })
   async create(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        branch: data.branch
+          ? {
+              connect: data.branch,
+            }
+          : undefined,
+      },
       select: {
+        branch: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         email: true,
         firstName: true,
@@ -83,6 +98,12 @@ export class UserControllerBase {
     return this.service.findMany({
       ...args,
       select: {
+        branch: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         email: true,
         firstName: true,
@@ -114,6 +135,12 @@ export class UserControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
+        branch: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         email: true,
         firstName: true,
@@ -152,8 +179,22 @@ export class UserControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          branch: data.branch
+            ? {
+                connect: data.branch,
+              }
+            : undefined,
+        },
         select: {
+          branch: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
           email: true,
           firstName: true,
@@ -193,6 +234,12 @@ export class UserControllerBase {
       return await this.service.delete({
         where: params,
         select: {
+          branch: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
           email: true,
           firstName: true,
@@ -214,14 +261,9 @@ export class UserControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id/eventRegistrations")
   @ApiNestedQuery(EventRegistrationFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "read",
-    possession: "any",
-  })
   async findManyEventRegistrations(
     @common.Req() request: Request,
     @common.Param() params: UserWhereUniqueInput

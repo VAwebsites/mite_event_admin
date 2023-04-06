@@ -42,6 +42,26 @@ export const BranchShow = (props: ShowProps): React.ReactElement => {
             <TextField label="Venue" source="venue" />
           </Datagrid>
         </ReferenceManyField>
+        <ReferenceManyField reference="User" target="BranchId" label="Users">
+          <Datagrid rowClick="show">
+            <ReferenceField
+              label="Branch"
+              source="branch.id"
+              reference="Branch"
+            >
+              <TextField source={BRANCH_TITLE_FIELD} />
+            </ReferenceField>
+            <DateField source="createdAt" label="Created At" />
+            <TextField label="Email" source="email" />
+            <TextField label="First Name" source="firstName" />
+            <TextField label="ID" source="id" />
+            <TextField label="Last Name" source="lastName" />
+            <TextField label="Roles" source="roles" />
+            <DateField source="updatedAt" label="Updated At" />
+            <TextField label="Username" source="username" />
+            <TextField label="USN" source="usn" />
+          </Datagrid>
+        </ReferenceManyField>
       </SimpleShowLayout>
     </Show>
   );

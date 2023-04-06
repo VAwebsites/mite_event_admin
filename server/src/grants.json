@@ -36,18 +36,6 @@
     "attributes": "*"
   },
   {
-    "role": "eventManager",
-    "resource": "Branch",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
-    "resource": "Branch",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
     "role": "superAdmin",
     "resource": "Branch",
     "action": "create:any",
@@ -67,18 +55,6 @@
   },
   {
     "role": "superAdmin",
-    "resource": "Branch",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
-    "resource": "Event",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
     "resource": "Event",
     "action": "create:any",
     "attributes": "*"
@@ -93,24 +69,6 @@
     "role": "superAdmin",
     "resource": "Event",
     "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
-    "resource": "Event",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "eventManager",
-    "resource": "EventRegistration",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
-    "resource": "EventRegistration",
-    "action": "read:own",
     "attributes": "*"
   },
   {
@@ -147,18 +105,6 @@
     "role": "superAdmin",
     "resource": "EventRegistration",
     "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "eventManager",
-    "resource": "EventRegistration",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
-    "resource": "EventRegistration",
-    "action": "read:any",
     "attributes": "*"
   }
 ]

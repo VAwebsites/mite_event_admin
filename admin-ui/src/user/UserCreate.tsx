@@ -4,12 +4,15 @@ import {
   Create,
   SimpleForm,
   CreateProps,
+  ReferenceInput,
+  SelectInput,
   TextInput,
   ReferenceArrayInput,
   SelectArrayInput,
   PasswordInput,
 } from "react-admin";
 
+import { BranchTitle } from "../branch/BranchTitle";
 import { EventRegistrationTitle } from "../eventRegistration/EventRegistrationTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
@@ -17,6 +20,9 @@ export const UserCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
+        <ReferenceInput source="branch.id" reference="Branch" label="Branch">
+          <SelectInput optionText={BranchTitle} />
+        </ReferenceInput>
         <TextInput label="Email" source="email" type="email" />
         <ReferenceArrayInput
           source="eventRegistrations"

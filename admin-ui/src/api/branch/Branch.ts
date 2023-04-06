@@ -1,4 +1,5 @@
 import { Event } from "../event/Event";
+import { User } from "../user/User";
 
 export type Branch = {
   createdAt: Date;
@@ -7,4 +8,5 @@ export type Branch = {
   img: string;
   name: string;
   updatedAt: Date;
+  users?: Array<User>;
 };

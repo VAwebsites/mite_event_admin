@@ -19,6 +19,7 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
@@ -27,6 +28,7 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
 import { EventRegistrationFindManyArgs } from "../../eventRegistration/base/EventRegistrationFindManyArgs";
 import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
+import { Branch } from "../../branch/base/Branch";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -91,7 +93,15 @@ export class UserResolverBase {
   async createUser(@graphql.Args() args: CreateUserArgs): Promise<User> {
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        branch: args.data.branch
+          ? {
+              connect: args.data.branch,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -106,7 +116,15 @@ export class UserResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          branch: args.data.branch
+            ? {
+                connect: args.data.branch,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -137,13 +155,8 @@ export class UserResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => [EventRegistration])
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "read",
-    possession: "any",
-  })
   async eventRegistrations(
     @graphql.Parent() parent: User,
     @graphql.Args() args: EventRegistrationFindManyArgs
@@ -155,5 +168,16 @@ export class UserResolverBase {
     }
 
     return results;
+  }
+
+  @Public()
+  @graphql.ResolveField(() => Branch, { nullable: true })
+  async branch(@graphql.Parent() parent: User): Promise<Branch | null> {
+    const result = await this.service.getBranch(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

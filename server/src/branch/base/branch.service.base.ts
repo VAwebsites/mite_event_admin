@@ -10,7 +10,7 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "../../prisma/prisma.service";
-import { Prisma, Branch, Event } from "@prisma/client";
+import { Prisma, Branch, Event, User } from "@prisma/client";
 
 export class BranchServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -56,5 +56,16 @@ export class BranchServiceBase {
         where: { id: parentId },
       })
       .events(args);
+  }
+
+  async findUsers(
+    parentId: string,
+    args: Prisma.UserFindManyArgs
+  ): Promise<User[]> {
+    return this.prisma.branch
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .users(args);
   }
 }

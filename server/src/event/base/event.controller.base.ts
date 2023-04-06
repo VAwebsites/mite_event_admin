@@ -20,7 +20,7 @@ import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { EventService } from "../event.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { EventCreateInput } from "./EventCreateInput";
 import { EventWhereInput } from "./EventWhereInput";
 import { EventWhereUniqueInput } from "./EventWhereUniqueInput";
@@ -78,15 +78,10 @@ export class EventControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [Event] })
   @ApiNestedQuery(EventFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "read",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -114,15 +109,10 @@ export class EventControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Event })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "read",
-    possession: "own",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -256,14 +246,9 @@ export class EventControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id/eventRegistrations")
   @ApiNestedQuery(EventRegistrationFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "read",
-    possession: "any",
-  })
   async findManyEventRegistrations(
     @common.Req() request: Request,
     @common.Param() params: EventWhereUniqueInput
