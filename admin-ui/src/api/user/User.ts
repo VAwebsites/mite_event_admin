@@ -1,7 +1,9 @@
+import { Branch } from "../branch/Branch";
 import { EventRegistration } from "../eventRegistration/EventRegistration";
 import { JsonValue } from "type-fest";
 
 export type User = {
+  branch?: Branch | null;
   createdAt: Date;
   email: string;
   eventRegistrations?: Array<EventRegistration>;

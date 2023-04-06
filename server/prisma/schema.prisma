@@ -8,6 +8,8 @@ generator client {
 }
 
 model User {
+  branch             Branch?             @relation(fields: [branchId], references: [id])
+  branchId           String?
   createdAt          DateTime            @default(now())
   email              String              @unique
   eventRegistrations EventRegistration[]
@@ -28,6 +30,7 @@ model Branch {
   img       String
   name      String
   updatedAt DateTime @updatedAt
+  users     User[]
 }
 
 model Event {

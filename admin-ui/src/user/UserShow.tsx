@@ -4,20 +4,24 @@ import {
   Show,
   SimpleShowLayout,
   ShowProps,
-  DateField,
+  ReferenceField,
   TextField,
+  DateField,
   ReferenceManyField,
   Datagrid,
-  ReferenceField,
 } from "react-admin";
 
 import { EVENT_TITLE_FIELD } from "../event/EventTitle";
 import { USER_TITLE_FIELD } from "./UserTitle";
+import { BRANCH_TITLE_FIELD } from "../branch/BranchTitle";
 
 export const UserShow = (props: ShowProps): React.ReactElement => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
+        <ReferenceField label="Branch" source="branch.id" reference="Branch">
+          <TextField source={BRANCH_TITLE_FIELD} />
+        </ReferenceField>
         <DateField source="createdAt" label="Created At" />
         <TextField label="Email" source="email" />
         <TextField label="First Name" source="firstName" />

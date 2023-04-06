@@ -11,14 +11,27 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, ValidateNested, IsOptional, IsJSON } from "class-validator";
-import { EventRegistrationCreateNestedManyWithoutUsersInput } from "./EventRegistrationCreateNestedManyWithoutUsersInput";
+import { BranchWhereUniqueInput } from "../../branch/base/BranchWhereUniqueInput";
+import { ValidateNested, IsOptional, IsString, IsJSON } from "class-validator";
 import { Type } from "class-transformer";
+import { EventRegistrationCreateNestedManyWithoutUsersInput } from "./EventRegistrationCreateNestedManyWithoutUsersInput";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
 
 @InputType()
 class UserCreateInput {
+  @ApiProperty({
+    required: false,
+    type: () => BranchWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => BranchWhereUniqueInput)
+  @IsOptional()
+  @Field(() => BranchWhereUniqueInput, {
+    nullable: true,
+  })
+  branch?: BranchWhereUniqueInput | null;
+
   @ApiProperty({
     required: true,
     type: String,

@@ -10,6 +10,7 @@ import {
 } from "react-admin";
 
 import { EventTitle } from "../event/EventTitle";
+import { UserTitle } from "../user/UserTitle";
 
 export const BranchCreate = (props: CreateProps): React.ReactElement => {
   return (
@@ -25,6 +26,14 @@ export const BranchCreate = (props: CreateProps): React.ReactElement => {
         </ReferenceArrayInput>
         <TextInput label="img" source="img" />
         <TextInput label="Name" source="name" />
+        <ReferenceArrayInput
+          source="users"
+          reference="User"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={UserTitle} />
+        </ReferenceArrayInput>
       </SimpleForm>
     </Create>
   );
