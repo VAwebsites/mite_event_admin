@@ -9,12 +9,14 @@ type Branch {
   img: String!
   name: String!
   updatedAt: DateTime!
+  users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
 }
 
 input BranchCreateInput {
   events: EventCreateNestedManyWithoutBranchesInput
   img: String!
   name: String!
+  users: UserCreateNestedManyWithoutBranchesInput
 }
 
 input BranchOrderByInput {
@@ -29,6 +31,7 @@ input BranchUpdateInput {
   events: EventUpdateManyWithoutBranchesInput
   img: String
   name: String
+  users: UserUpdateManyWithoutBranchesInput
 }
 
 input BranchWhereInput {
@@ -36,6 +39,7 @@ input BranchWhereInput {
   id: StringFilter
   img: StringFilter
   name: StringFilter
+  users: UserListRelationFilter
 }
 
 input BranchWhereUniqueInput {
@@ -288,6 +292,7 @@ input StringNullableFilter {
 }
 
 type User {
+  branch: Branch
   createdAt: DateTime!
   email: String!
   eventRegistrations(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): [EventRegistration!]!
@@ -301,6 +306,7 @@ type User {
 }
 
 input UserCreateInput {
+  branch: BranchWhereUniqueInput
   email: String!
   eventRegistrations: EventRegistrationCreateNestedManyWithoutUsersInput
   firstName: String
@@ -311,6 +317,10 @@ input UserCreateInput {
   usn: String!
 }
 
+input UserCreateNestedManyWithoutBranchesInput {
+  connect: [UserWhereUniqueInput!]
+}
+
 type UserInfo {
   accessToken: String
   id: String!
@@ -318,7 +328,14 @@ type UserInfo {
   username: String!
 }
 
+input UserListRelationFilter {
+  every: UserWhereInput
+  none: UserWhereInput
+  some: UserWhereInput
+}
+
 input UserOrderByInput {
+  branchId: SortOrder
   createdAt: SortOrder
   email: SortOrder
   firstName: SortOrder
@@ -332,6 +349,7 @@ input UserOrderByInput {
 }
 
 input UserUpdateInput {
+  branch: BranchWhereUniqueInput
   email: String
   eventRegistrations: EventRegistrationUpdateManyWithoutUsersInput
   firstName: String
@@ -342,7 +360,14 @@ input UserUpdateInput {
   usn: String
 }
 
+input UserUpdateManyWithoutBranchesInput {
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+}
+
 input UserWhereInput {
+  branch: BranchWhereUniqueInput
   email: StringFilter
   eventRegistrations: EventRegistrationListRelationFilter
   firstName: StringNullableFilter
