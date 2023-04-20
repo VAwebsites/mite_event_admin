@@ -19,8 +19,8 @@ import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { EventRegistrationService } from "../eventRegistration.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Public } from "../../decorators/public.decorator";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { EventRegistrationCreateInput } from "./EventRegistrationCreateInput";
 import { EventRegistrationWhereInput } from "./EventRegistrationWhereInput";
 import { EventRegistrationWhereUniqueInput } from "./EventRegistrationWhereUniqueInput";
@@ -35,14 +35,9 @@ export class EventRegistrationControllerBase {
     protected readonly service: EventRegistrationService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @common.Post()
   @swagger.ApiCreatedResponse({ type: EventRegistration })
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "create",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })

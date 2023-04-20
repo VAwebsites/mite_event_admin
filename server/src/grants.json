@@ -50,18 +50,6 @@
   {
     "role": "eventManager",
     "resource": "EventRegistration",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
-    "resource": "EventRegistration",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "eventManager",
-    "resource": "EventRegistration",
     "action": "update:any",
     "attributes": "*"
   },
