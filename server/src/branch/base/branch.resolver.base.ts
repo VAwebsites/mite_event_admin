@@ -19,7 +19,6 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { CreateBranchArgs } from "./CreateBranchArgs";
 import { UpdateBranchArgs } from "./UpdateBranchArgs";
 import { DeleteBranchArgs } from "./DeleteBranchArgs";
@@ -147,13 +146,8 @@ export class BranchResolverBase {
     return results;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => [User])
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async users(
     @graphql.Parent() parent: Branch,
     @graphql.Args() args: UserFindManyArgs

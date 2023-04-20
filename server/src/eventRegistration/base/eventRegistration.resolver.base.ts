@@ -19,7 +19,6 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { CreateEventRegistrationArgs } from "./CreateEventRegistrationArgs";
 import { UpdateEventRegistrationArgs } from "./UpdateEventRegistrationArgs";
 import { DeleteEventRegistrationArgs } from "./DeleteEventRegistrationArgs";
@@ -167,13 +166,8 @@ export class EventRegistrationResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => User, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async user(
     @graphql.Parent() parent: EventRegistration
   ): Promise<User | null> {

@@ -12,9 +12,16 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { BranchWhereUniqueInput } from "../../branch/base/BranchWhereUniqueInput";
-import { ValidateNested, IsOptional, IsString, IsJSON } from "class-validator";
+import {
+  ValidateNested,
+  IsOptional,
+  IsString,
+  IsEnum,
+  IsJSON,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { EventRegistrationCreateNestedManyWithoutUsersInput } from "./EventRegistrationCreateNestedManyWithoutUsersInput";
+import { EnumUserGender } from "./EnumUserGender";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
 
@@ -65,6 +72,20 @@ class UserCreateInput {
 
   @ApiProperty({
     required: false,
+    enum: EnumUserGender,
+    isArray: true,
+  })
+  @IsEnum(EnumUserGender, {
+    each: true,
+  })
+  @IsOptional()
+  @Field(() => [EnumUserGender], {
+    nullable: true,
+  })
+  gender?: Array<"Male" | "Female">;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()
@@ -81,6 +102,17 @@ class UserCreateInput {
   @IsString()
   @Field(() => String)
   password!: string;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  profilePath?: string | null;
 
   @ApiProperty({
     required: true,

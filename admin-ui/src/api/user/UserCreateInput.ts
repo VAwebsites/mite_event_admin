@@ -7,8 +7,10 @@ export type UserCreateInput = {
   email: string;
   eventRegistrations?: EventRegistrationCreateNestedManyWithoutUsersInput;
   firstName?: string | null;
+  gender?: Array<"Male" | "Female">;
   lastName?: string | null;
   password: string;
+  profilePath?: string | null;
   roles: InputJsonValue;
   username: string;
   usn: string;

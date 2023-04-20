@@ -61,6 +61,15 @@ class UserOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  gender?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   id?: SortOrder;
 
   @ApiProperty({
@@ -80,6 +89,15 @@ class UserOrderByInput {
     nullable: true,
   })
   password?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  profilePath?: SortOrder;
 
   @ApiProperty({
     required: false,
