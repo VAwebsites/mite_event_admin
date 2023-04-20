@@ -10,6 +10,7 @@ export type UserWhereInput = {
   firstName?: StringNullableFilter;
   id?: StringFilter;
   lastName?: StringNullableFilter;
+  profilePath?: StringNullableFilter;
   username?: StringFilter;
   usn?: StringFilter;
 };

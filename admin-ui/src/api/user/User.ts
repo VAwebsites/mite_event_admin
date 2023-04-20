@@ -8,8 +8,10 @@ export type User = {
   email: string;
   eventRegistrations?: Array<EventRegistration>;
   firstName: string | null;
+  gender?: Array<"Male" | "Female">;
   id: string;
   lastName: string | null;
+  profilePath: string | null;
   roles: JsonValue;
   updatedAt: Date;
   username: string;

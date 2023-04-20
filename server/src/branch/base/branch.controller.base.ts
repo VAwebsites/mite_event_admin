@@ -21,7 +21,6 @@ import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { BranchService } from "../branch.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Public } from "../../decorators/public.decorator";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { BranchCreateInput } from "./BranchCreateInput";
 import { BranchWhereInput } from "./BranchWhereInput";
 import { BranchWhereUniqueInput } from "./BranchWhereUniqueInput";
@@ -290,14 +289,9 @@ export class BranchControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id/users")
   @ApiNestedQuery(UserFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async findManyUsers(
     @common.Req() request: Request,
     @common.Param() params: BranchWhereUniqueInput
@@ -315,8 +309,10 @@ export class BranchControllerBase {
         createdAt: true,
         email: true,
         firstName: true,
+        gender: true,
         id: true,
         lastName: true,
+        profilePath: true,
         roles: true,
         updatedAt: true,
         username: true,

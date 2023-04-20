@@ -17,10 +17,12 @@ import {
   IsOptional,
   IsDate,
   IsString,
+  IsEnum,
   IsJSON,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
+import { EnumUserGender } from "./EnumUserGender";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
 
@@ -72,6 +74,20 @@ class User {
   firstName!: string | null;
 
   @ApiProperty({
+    required: false,
+    enum: EnumUserGender,
+    isArray: true,
+  })
+  @IsEnum(EnumUserGender, {
+    each: true,
+  })
+  @IsOptional()
+  @Field(() => [EnumUserGender], {
+    nullable: true,
+  })
+  gender?: Array<"Male" | "Female">;
+
+  @ApiProperty({
     required: true,
     type: String,
   })
@@ -89,6 +105,17 @@ class User {
     nullable: true,
   })
   lastName!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  profilePath!: string | null;
 
   @ApiProperty({
     required: true,

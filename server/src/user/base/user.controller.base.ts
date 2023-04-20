@@ -19,9 +19,8 @@ import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { UserService } from "../user.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { Public } from "../../decorators/public.decorator";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { UserCreateInput } from "./UserCreateInput";
 import { UserWhereInput } from "./UserWhereInput";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
@@ -39,14 +38,9 @@ export class UserControllerBase {
     protected readonly service: UserService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @common.Post()
   @swagger.ApiCreatedResponse({ type: User })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "create",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -71,8 +65,10 @@ export class UserControllerBase {
         createdAt: true,
         email: true,
         firstName: true,
+        gender: true,
         id: true,
         lastName: true,
+        profilePath: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -81,15 +77,10 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [User] })
   @ApiNestedQuery(UserFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -107,8 +98,10 @@ export class UserControllerBase {
         createdAt: true,
         email: true,
         firstName: true,
+        gender: true,
         id: true,
         lastName: true,
+        profilePath: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -117,15 +110,10 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "own",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -144,8 +132,10 @@ export class UserControllerBase {
         createdAt: true,
         email: true,
         firstName: true,
+        gender: true,
         id: true,
         lastName: true,
+        profilePath: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -198,8 +188,10 @@ export class UserControllerBase {
           createdAt: true,
           email: true,
           firstName: true,
+          gender: true,
           id: true,
           lastName: true,
+          profilePath: true,
           roles: true,
           updatedAt: true,
           username: true,
@@ -243,8 +235,10 @@ export class UserControllerBase {
           createdAt: true,
           email: true,
           firstName: true,
+          gender: true,
           id: true,
           lastName: true,
+          profilePath: true,
           roles: true,
           updatedAt: true,
           username: true,
