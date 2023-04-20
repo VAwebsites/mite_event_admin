@@ -101,11 +101,11 @@ export class BranchResolverBase {
         data: args.data,
       });
     } catch (error) {
-      if (isRecordNotFoundError(error)) {
-        throw new apollo.ApolloError(
-          `No resource was found for ${JSON.stringify(args.where)}`
-        );
-      }
+      // if (isRecordNotFoundError(error)) {
+      //   throw new apollo.ApolloError(
+      //     `No resource was found for ${JSON.stringify(args.where)}`
+      //   );
+      // }
       throw error;
     }
   }
@@ -122,11 +122,11 @@ export class BranchResolverBase {
     try {
       return await this.service.delete(args);
     } catch (error) {
-      if (isRecordNotFoundError(error)) {
-        throw new apollo.ApolloError(
-          `No resource was found for ${JSON.stringify(args.where)}`
-        );
-      }
+      // if (isRecordNotFoundError(error)) {
+      //   throw new apollo.ApolloError(
+      //     `No resource was found for ${JSON.stringify(args.where)}`
+      //   );
+      // }
       throw error;
     }
   }
@@ -158,6 +158,6 @@ export class BranchResolverBase {
       return [];
     }
 
-    return results;
+    return [];
   }
 }
