@@ -1,23 +1,5 @@
 [
   {
-    "role": "eventManager",
-    "resource": "User",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
-    "resource": "User",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
-    "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
     "role": "superAdmin",
     "resource": "User",
     "action": "update:any",
@@ -27,12 +9,6 @@
     "role": "superAdmin",
     "resource": "User",
     "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
-    "resource": "User",
-    "action": "read:any",
     "attributes": "*"
   },
   {
