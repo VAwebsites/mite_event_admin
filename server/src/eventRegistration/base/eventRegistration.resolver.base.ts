@@ -71,13 +71,8 @@ export class EventRegistrationResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => EventRegistration)
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "create",
-    possession: "any",
-  })
   async createEventRegistration(
     @graphql.Args() args: CreateEventRegistrationArgs
   ): Promise<EventRegistration> {
