@@ -49,14 +49,6 @@ class Branch {
   })
   @IsString()
   @Field(() => String)
-  img!: string;
-
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
   name!: string;
 
   @ApiProperty({
