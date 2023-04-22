@@ -6,7 +6,7 @@ type Branch {
   createdAt: DateTime!
   events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
   id: String!
-  img: String!
+  img: String
   name: String!
   updatedAt: DateTime!
   users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
@@ -14,7 +14,7 @@ type Branch {
 
 input BranchCreateInput {
   events: EventCreateNestedManyWithoutBranchesInput
-  img: String!
+  img: String
   name: String!
   users: UserCreateNestedManyWithoutBranchesInput
 }
@@ -37,7 +37,7 @@ input BranchUpdateInput {
 input BranchWhereInput {
   events: EventListRelationFilter
   id: StringFilter
-  img: StringFilter
+  img: StringNullableFilter
   name: StringFilter
   users: UserListRelationFilter
 }
