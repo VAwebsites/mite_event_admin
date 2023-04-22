@@ -43,15 +43,6 @@ class BranchOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  img?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
   name?: SortOrder;
 
   @ApiProperty({

@@ -51,17 +51,6 @@ class BranchWhereInput {
   @Field(() => StringFilter, {
     nullable: true,
   })
-  img?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: StringFilter,
-  })
-  @Type(() => StringFilter)
-  @IsOptional()
-  @Field(() => StringFilter, {
-    nullable: true,
-  })
   name?: StringFilter;
 
   @ApiProperty({
