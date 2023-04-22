@@ -19,6 +19,7 @@ export const BranchShow = (props: ShowProps): React.ReactElement => {
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
         <TextField label="ID" source="id" />
+        <TextField label="img" source="img" />
         <TextField label="Name" source="name" />
         <DateField source="updatedAt" label="Updated At" />
         <ReferenceManyField reference="Event" target="BranchId" label="Events">
