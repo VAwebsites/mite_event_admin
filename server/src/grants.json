@@ -32,12 +32,6 @@
   {
     "role": "superAdmin",
     "resource": "Event",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "superAdmin",
-    "resource": "Event",
     "action": "update:any",
     "attributes": "*"
   },
