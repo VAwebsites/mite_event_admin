@@ -70,13 +70,8 @@ export class EventResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => Event)
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "create",
-    possession: "any",
-  })
   async createEvent(@graphql.Args() args: CreateEventArgs): Promise<Event> {
     return await this.service.create({
       ...args,
