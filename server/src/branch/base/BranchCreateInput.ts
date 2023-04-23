@@ -31,17 +31,6 @@ class BranchCreateInput {
   events?: EventCreateNestedManyWithoutBranchesInput;
 
   @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  img?: string | null;
-
-  @ApiProperty({
     required: true,
     type: String,
   })
