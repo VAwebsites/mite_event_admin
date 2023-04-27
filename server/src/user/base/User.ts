@@ -18,11 +18,11 @@ import {
   IsDate,
   IsString,
   IsEnum,
-  IsJSON,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
 import { EnumUserGender } from "./EnumUserGender";
+import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
 
@@ -120,7 +120,7 @@ class User {
   @ApiProperty({
     required: true,
   })
-  @IsJSON()
+  @IsJSONValue()
   @Field(() => GraphQLJSON)
   roles!: JsonValue;
 

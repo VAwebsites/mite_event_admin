@@ -17,6 +17,7 @@ import { Type } from "class-transformer";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { EventRegistrationListRelationFilter } from "../../eventRegistration/base/EventRegistrationListRelationFilter";
+import { FeedbackListRelationFilter } from "../../feedback/base/FeedbackListRelationFilter";
 import { StringFilter } from "../../util/StringFilter";
 
 @InputType()
@@ -66,6 +67,18 @@ class EventWhereInput {
     nullable: true,
   })
   eventRegistrations?: EventRegistrationListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => FeedbackListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => FeedbackListRelationFilter)
+  @IsOptional()
+  @Field(() => FeedbackListRelationFilter, {
+    nullable: true,
+  })
+  feedbacks?: FeedbackListRelationFilter;
 
   @ApiProperty({
     required: false,

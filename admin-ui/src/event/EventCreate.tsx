@@ -14,6 +14,7 @@ import {
 
 import { BranchTitle } from "../branch/BranchTitle";
 import { EventRegistrationTitle } from "../eventRegistration/EventRegistrationTitle";
+import { FeedbackTitle } from "../feedback/FeedbackTitle";
 
 export const EventCreate = (props: CreateProps): React.ReactElement => {
   return (
@@ -31,6 +32,14 @@ export const EventCreate = (props: CreateProps): React.ReactElement => {
           format={(value: any) => value && value.map((v: any) => v.id)}
         >
           <SelectArrayInput optionText={EventRegistrationTitle} />
+        </ReferenceArrayInput>
+        <ReferenceArrayInput
+          source="feedbacks"
+          reference="Feedback"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={FeedbackTitle} />
         </ReferenceArrayInput>
         <TextInput label="img" source="img" />
         <DateTimeInput label="Start date" source="startDate" />
