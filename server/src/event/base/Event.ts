@@ -15,6 +15,7 @@ import { Branch } from "../../branch/base/Branch";
 import { ValidateNested, IsDate, IsString, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
+import { Feedback } from "../../feedback/base/Feedback";
 
 @ObjectType()
 class Event {
@@ -64,6 +65,15 @@ class Event {
   @Type(() => EventRegistration)
   @IsOptional()
   eventRegistrations?: Array<EventRegistration>;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Feedback],
+  })
+  @ValidateNested()
+  @Type(() => Feedback)
+  @IsOptional()
+  feedbacks?: Array<Feedback>;
 
   @ApiProperty({
     required: true,

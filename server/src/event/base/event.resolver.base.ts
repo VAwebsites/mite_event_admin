@@ -19,6 +19,7 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { CreateEventArgs } from "./CreateEventArgs";
 import { UpdateEventArgs } from "./UpdateEventArgs";
 import { DeleteEventArgs } from "./DeleteEventArgs";
@@ -27,6 +28,8 @@ import { EventFindUniqueArgs } from "./EventFindUniqueArgs";
 import { Event } from "./Event";
 import { EventRegistrationFindManyArgs } from "../../eventRegistration/base/EventRegistrationFindManyArgs";
 import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
+import { FeedbackFindManyArgs } from "../../feedback/base/FeedbackFindManyArgs";
+import { Feedback } from "../../feedback/base/Feedback";
 import { Branch } from "../../branch/base/Branch";
 import { EventService } from "../event.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -144,6 +147,26 @@ export class EventResolverBase {
     @graphql.Args() args: EventRegistrationFindManyArgs
   ): Promise<EventRegistration[]> {
     const results = await this.service.findEventRegistrations(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Feedback])
+  @nestAccessControl.UseRoles({
+    resource: "Feedback",
+    action: "read",
+    possession: "any",
+  })
+  async feedbacks(
+    @graphql.Parent() parent: Event,
+    @graphql.Args() args: FeedbackFindManyArgs
+  ): Promise<Feedback[]> {
+    const results = await this.service.findFeedbacks(parent.id, args);
 
     if (!results) {
       return [];

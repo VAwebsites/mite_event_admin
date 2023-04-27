@@ -15,6 +15,7 @@ import { BranchWhereUniqueInput } from "../../branch/base/BranchWhereUniqueInput
 import { ValidateNested, IsString, IsOptional, IsDate } from "class-validator";
 import { Type } from "class-transformer";
 import { EventRegistrationCreateNestedManyWithoutEventsInput } from "./EventRegistrationCreateNestedManyWithoutEventsInput";
+import { FeedbackCreateNestedManyWithoutEventsInput } from "./FeedbackCreateNestedManyWithoutEventsInput";
 
 @InputType()
 class EventCreateInput {
@@ -60,6 +61,18 @@ class EventCreateInput {
     nullable: true,
   })
   eventRegistrations?: EventRegistrationCreateNestedManyWithoutEventsInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => FeedbackCreateNestedManyWithoutEventsInput,
+  })
+  @ValidateNested()
+  @Type(() => FeedbackCreateNestedManyWithoutEventsInput)
+  @IsOptional()
+  @Field(() => FeedbackCreateNestedManyWithoutEventsInput, {
+    nullable: true,
+  })
+  feedbacks?: FeedbackCreateNestedManyWithoutEventsInput;
 
   @ApiProperty({
     required: false,

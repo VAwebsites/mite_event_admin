@@ -10,7 +10,13 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "../../prisma/prisma.service";
-import { Prisma, Event, EventRegistration, Branch } from "@prisma/client";
+import {
+  Prisma,
+  Event,
+  EventRegistration,
+  Feedback,
+  Branch,
+} from "@prisma/client";
 
 export class EventServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -56,6 +62,17 @@ export class EventServiceBase {
         where: { id: parentId },
       })
       .eventRegistrations(args);
+  }
+
+  async findFeedbacks(
+    parentId: string,
+    args: Prisma.FeedbackFindManyArgs
+  ): Promise<Feedback[]> {
+    return this.prisma.event
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .feedbacks(args);
   }
 
   async getBranch(parentId: string): Promise<Branch | null> {

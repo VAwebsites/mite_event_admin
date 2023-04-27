@@ -21,6 +21,7 @@ import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { EventService } from "../event.service";
 import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { EventCreateInput } from "./EventCreateInput";
 import { EventWhereInput } from "./EventWhereInput";
 import { EventWhereUniqueInput } from "./EventWhereUniqueInput";
@@ -30,6 +31,9 @@ import { Event } from "./Event";
 import { EventRegistrationFindManyArgs } from "../../eventRegistration/base/EventRegistrationFindManyArgs";
 import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
 import { EventRegistrationWhereUniqueInput } from "../../eventRegistration/base/EventRegistrationWhereUniqueInput";
+import { FeedbackFindManyArgs } from "../../feedback/base/FeedbackFindManyArgs";
+import { Feedback } from "../../feedback/base/Feedback";
+import { FeedbackWhereUniqueInput } from "../../feedback/base/FeedbackWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -334,6 +338,109 @@ export class EventControllerBase {
   ): Promise<void> {
     const data = {
       eventRegistrations: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/feedbacks")
+  @ApiNestedQuery(FeedbackFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Feedback",
+    action: "read",
+    possession: "any",
+  })
+  async findManyFeedbacks(
+    @common.Req() request: Request,
+    @common.Param() params: EventWhereUniqueInput
+  ): Promise<Feedback[]> {
+    const query = plainToClass(FeedbackFindManyArgs, request.query);
+    const results = await this.service.findFeedbacks(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+
+        event: {
+          select: {
+            id: true,
+          },
+        },
+
+        id: true,
+        message: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/feedbacks")
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "update",
+    possession: "any",
+  })
+  async connectFeedbacks(
+    @common.Param() params: EventWhereUniqueInput,
+    @common.Body() body: FeedbackWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      feedbacks: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/feedbacks")
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "update",
+    possession: "any",
+  })
+  async updateFeedbacks(
+    @common.Param() params: EventWhereUniqueInput,
+    @common.Body() body: FeedbackWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      feedbacks: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/feedbacks")
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectFeedbacks(
+    @common.Param() params: EventWhereUniqueInput,
+    @common.Body() body: FeedbackWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      feedbacks: {
         disconnect: body,
       },
     };
