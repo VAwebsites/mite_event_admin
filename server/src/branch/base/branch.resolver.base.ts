@@ -17,7 +17,7 @@ import * as nestAccessControl from "nest-access-control";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
-import { Public } from "../../decorators/public.decorator";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateBranchArgs } from "./CreateBranchArgs";
 import { UpdateBranchArgs } from "./UpdateBranchArgs";
@@ -38,8 +38,12 @@ export class BranchResolverBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
-  @Public()
   @graphql.Query(() => MetaQueryPayload)
+  @nestAccessControl.UseRoles({
+    resource: "Branch",
+    action: "read",
+    possession: "any",
+  })
   async _branchesMeta(
     @graphql.Args() args: BranchFindManyArgs
   ): Promise<MetaQueryPayload> {
@@ -53,14 +57,24 @@ export class BranchResolverBase {
     };
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Branch])
+  @nestAccessControl.UseRoles({
+    resource: "Branch",
+    action: "read",
+    possession: "any",
+  })
   async branches(@graphql.Args() args: BranchFindManyArgs): Promise<Branch[]> {
     return this.service.findMany(args);
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Branch, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Branch",
+    action: "read",
+    possession: "own",
+  })
   async branch(
     @graphql.Args() args: BranchFindUniqueArgs
   ): Promise<Branch | null> {
@@ -131,8 +145,13 @@ export class BranchResolverBase {
     }
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Event])
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "read",
+    possession: "any",
+  })
   async events(
     @graphql.Parent() parent: Branch,
     @graphql.Args() args: EventFindManyArgs
@@ -146,8 +165,13 @@ export class BranchResolverBase {
     return results;
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User])
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
   async users(
     @graphql.Parent() parent: Branch,
     @graphql.Args() args: UserFindManyArgs
