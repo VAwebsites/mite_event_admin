@@ -19,8 +19,7 @@ import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { FeedbackService } from "../feedback.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { FeedbackCreateInput } from "./FeedbackCreateInput";
 import { FeedbackWhereInput } from "./FeedbackWhereInput";
 import { FeedbackWhereUniqueInput } from "./FeedbackWhereUniqueInput";
@@ -35,14 +34,9 @@ export class FeedbackControllerBase {
     protected readonly service: FeedbackService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Feedback })
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "create",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -73,15 +67,10 @@ export class FeedbackControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [Feedback] })
   @ApiNestedQuery(FeedbackFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "read",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -105,15 +94,10 @@ export class FeedbackControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Feedback })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "read",
-    possession: "own",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -144,15 +128,10 @@ export class FeedbackControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Feedback })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "update",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -196,14 +175,10 @@ export class FeedbackControllerBase {
     }
   }
 
+  @Public()
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Feedback })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "delete",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })

@@ -17,8 +17,7 @@ import * as nestAccessControl from "nest-access-control";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { CreateFeedbackArgs } from "./CreateFeedbackArgs";
 import { UpdateFeedbackArgs } from "./UpdateFeedbackArgs";
 import { DeleteFeedbackArgs } from "./DeleteFeedbackArgs";
@@ -35,12 +34,8 @@ export class FeedbackResolverBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
+  @Public()
   @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "read",
-    possession: "any",
-  })
   async _feedbacksMeta(
     @graphql.Args() args: FeedbackFindManyArgs
   ): Promise<MetaQueryPayload> {
@@ -54,26 +49,16 @@ export class FeedbackResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => [Feedback])
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "read",
-    possession: "any",
-  })
   async feedbacks(
     @graphql.Args() args: FeedbackFindManyArgs
   ): Promise<Feedback[]> {
     return this.service.findMany(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => Feedback, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "read",
-    possession: "own",
-  })
   async feedback(
     @graphql.Args() args: FeedbackFindUniqueArgs
   ): Promise<Feedback | null> {
@@ -84,13 +69,8 @@ export class FeedbackResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => Feedback)
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "create",
-    possession: "any",
-  })
   async createFeedback(
     @graphql.Args() args: CreateFeedbackArgs
   ): Promise<Feedback> {
@@ -108,13 +88,8 @@ export class FeedbackResolverBase {
     });
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => Feedback)
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "update",
-    possession: "any",
-  })
   async updateFeedback(
     @graphql.Args() args: UpdateFeedbackArgs
   ): Promise<Feedback | null> {
@@ -141,12 +116,8 @@ export class FeedbackResolverBase {
     }
   }
 
+  @Public()
   @graphql.Mutation(() => Feedback)
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "delete",
-    possession: "any",
-  })
   async deleteFeedback(
     @graphql.Args() args: DeleteFeedbackArgs
   ): Promise<Feedback | null> {
@@ -162,13 +133,8 @@ export class FeedbackResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => Event, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "read",
-    possession: "any",
-  })
   async event(@graphql.Parent() parent: Feedback): Promise<Event | null> {
     const result = await this.service.getEvent(parent.id);
 

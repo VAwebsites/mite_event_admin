@@ -19,8 +19,7 @@ import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { BranchService } from "../branch.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { BranchCreateInput } from "./BranchCreateInput";
 import { BranchWhereInput } from "./BranchWhereInput";
 import { BranchWhereUniqueInput } from "./BranchWhereUniqueInput";
@@ -41,14 +40,9 @@ export class BranchControllerBase {
     protected readonly service: BranchService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Branch })
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "create",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -64,15 +58,10 @@ export class BranchControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [Branch] })
   @ApiNestedQuery(BranchFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "read",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -89,15 +78,10 @@ export class BranchControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Branch })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "read",
-    possession: "own",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -121,15 +105,10 @@ export class BranchControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Branch })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "update",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -158,14 +137,10 @@ export class BranchControllerBase {
     }
   }
 
+  @Public()
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Branch })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "delete",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -192,14 +167,9 @@ export class BranchControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id/events")
   @ApiNestedQuery(EventFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "read",
-    possession: "any",
-  })
   async findManyEvents(
     @common.Req() request: Request,
     @common.Param() params: BranchWhereUniqueInput
@@ -233,12 +203,8 @@ export class BranchControllerBase {
     return results;
   }
 
+  @Public()
   @common.Post("/:id/events")
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "update",
-    possession: "any",
-  })
   async connectEvents(
     @common.Param() params: BranchWhereUniqueInput,
     @common.Body() body: EventWhereUniqueInput[]
@@ -255,12 +221,8 @@ export class BranchControllerBase {
     });
   }
 
+  @Public()
   @common.Patch("/:id/events")
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "update",
-    possession: "any",
-  })
   async updateEvents(
     @common.Param() params: BranchWhereUniqueInput,
     @common.Body() body: EventWhereUniqueInput[]
@@ -277,12 +239,8 @@ export class BranchControllerBase {
     });
   }
 
+  @Public()
   @common.Delete("/:id/events")
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "update",
-    possession: "any",
-  })
   async disconnectEvents(
     @common.Param() params: BranchWhereUniqueInput,
     @common.Body() body: EventWhereUniqueInput[]
@@ -299,14 +257,9 @@ export class BranchControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id/users")
   @ApiNestedQuery(UserFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async findManyUsers(
     @common.Req() request: Request,
     @common.Param() params: BranchWhereUniqueInput
@@ -342,12 +295,8 @@ export class BranchControllerBase {
     return results;
   }
 
+  @Public()
   @common.Post("/:id/users")
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "update",
-    possession: "any",
-  })
   async connectUsers(
     @common.Param() params: BranchWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -364,12 +313,8 @@ export class BranchControllerBase {
     });
   }
 
+  @Public()
   @common.Patch("/:id/users")
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "update",
-    possession: "any",
-  })
   async updateUsers(
     @common.Param() params: BranchWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -386,12 +331,8 @@ export class BranchControllerBase {
     });
   }
 
+  @Public()
   @common.Delete("/:id/users")
-  @nestAccessControl.UseRoles({
-    resource: "Branch",
-    action: "update",
-    possession: "any",
-  })
   async disconnectUsers(
     @common.Param() params: BranchWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]

@@ -17,8 +17,7 @@ import * as nestAccessControl from "nest-access-control";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { CreateEventRegistrationArgs } from "./CreateEventRegistrationArgs";
 import { UpdateEventRegistrationArgs } from "./UpdateEventRegistrationArgs";
 import { DeleteEventRegistrationArgs } from "./DeleteEventRegistrationArgs";
@@ -36,12 +35,8 @@ export class EventRegistrationResolverBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
+  @Public()
   @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "read",
-    possession: "any",
-  })
   async _eventRegistrationsMeta(
     @graphql.Args() args: EventRegistrationFindManyArgs
   ): Promise<MetaQueryPayload> {
@@ -55,26 +50,16 @@ export class EventRegistrationResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => [EventRegistration])
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "read",
-    possession: "any",
-  })
   async eventRegistrations(
     @graphql.Args() args: EventRegistrationFindManyArgs
   ): Promise<EventRegistration[]> {
     return this.service.findMany(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => EventRegistration, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "read",
-    possession: "own",
-  })
   async eventRegistration(
     @graphql.Args() args: EventRegistrationFindUniqueArgs
   ): Promise<EventRegistration | null> {
@@ -85,13 +70,8 @@ export class EventRegistrationResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => EventRegistration)
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "create",
-    possession: "any",
-  })
   async createEventRegistration(
     @graphql.Args() args: CreateEventRegistrationArgs
   ): Promise<EventRegistration> {
@@ -111,13 +91,8 @@ export class EventRegistrationResolverBase {
     });
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => EventRegistration)
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "update",
-    possession: "any",
-  })
   async updateEventRegistration(
     @graphql.Args() args: UpdateEventRegistrationArgs
   ): Promise<EventRegistration | null> {
@@ -146,12 +121,8 @@ export class EventRegistrationResolverBase {
     }
   }
 
+  @Public()
   @graphql.Mutation(() => EventRegistration)
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "delete",
-    possession: "any",
-  })
   async deleteEventRegistration(
     @graphql.Args() args: DeleteEventRegistrationArgs
   ): Promise<EventRegistration | null> {
@@ -167,13 +138,8 @@ export class EventRegistrationResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => Event, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "read",
-    possession: "any",
-  })
   async event(
     @graphql.Parent() parent: EventRegistration
   ): Promise<Event | null> {
@@ -185,13 +151,8 @@ export class EventRegistrationResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => User, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
   async user(
     @graphql.Parent() parent: EventRegistration
   ): Promise<User | null> {
