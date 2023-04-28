@@ -19,8 +19,7 @@ import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { EventService } from "../event.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { EventCreateInput } from "./EventCreateInput";
 import { EventWhereInput } from "./EventWhereInput";
 import { EventWhereUniqueInput } from "./EventWhereUniqueInput";
@@ -41,14 +40,9 @@ export class EventControllerBase {
     protected readonly service: EventService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Event })
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "create",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -81,15 +75,10 @@ export class EventControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [Event] })
   @ApiNestedQuery(EventFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "read",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -117,15 +106,10 @@ export class EventControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Event })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "read",
-    possession: "own",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -160,15 +144,10 @@ export class EventControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Event })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "update",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -214,14 +193,10 @@ export class EventControllerBase {
     }
   }
 
+  @Public()
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Event })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "delete",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -259,14 +234,9 @@ export class EventControllerBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id/eventRegistrations")
   @ApiNestedQuery(EventRegistrationFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "EventRegistration",
-    action: "read",
-    possession: "any",
-  })
   async findManyEventRegistrations(
     @common.Req() request: Request,
     @common.Param() params: EventWhereUniqueInput
@@ -301,12 +271,8 @@ export class EventControllerBase {
     return results;
   }
 
+  @Public()
   @common.Post("/:id/eventRegistrations")
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "update",
-    possession: "any",
-  })
   async connectEventRegistrations(
     @common.Param() params: EventWhereUniqueInput,
     @common.Body() body: EventRegistrationWhereUniqueInput[]
@@ -323,12 +289,8 @@ export class EventControllerBase {
     });
   }
 
+  @Public()
   @common.Patch("/:id/eventRegistrations")
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "update",
-    possession: "any",
-  })
   async updateEventRegistrations(
     @common.Param() params: EventWhereUniqueInput,
     @common.Body() body: EventRegistrationWhereUniqueInput[]
@@ -345,12 +307,8 @@ export class EventControllerBase {
     });
   }
 
+  @Public()
   @common.Delete("/:id/eventRegistrations")
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "update",
-    possession: "any",
-  })
   async disconnectEventRegistrations(
     @common.Param() params: EventWhereUniqueInput,
     @common.Body() body: EventRegistrationWhereUniqueInput[]
@@ -367,14 +325,9 @@ export class EventControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id/feedbacks")
   @ApiNestedQuery(FeedbackFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Feedback",
-    action: "read",
-    possession: "any",
-  })
   async findManyFeedbacks(
     @common.Req() request: Request,
     @common.Param() params: EventWhereUniqueInput
@@ -404,12 +357,8 @@ export class EventControllerBase {
     return results;
   }
 
+  @Public()
   @common.Post("/:id/feedbacks")
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "update",
-    possession: "any",
-  })
   async connectFeedbacks(
     @common.Param() params: EventWhereUniqueInput,
     @common.Body() body: FeedbackWhereUniqueInput[]
@@ -426,12 +375,8 @@ export class EventControllerBase {
     });
   }
 
+  @Public()
   @common.Patch("/:id/feedbacks")
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "update",
-    possession: "any",
-  })
   async updateFeedbacks(
     @common.Param() params: EventWhereUniqueInput,
     @common.Body() body: FeedbackWhereUniqueInput[]
@@ -448,12 +393,8 @@ export class EventControllerBase {
     });
   }
 
+  @Public()
   @common.Delete("/:id/feedbacks")
-  @nestAccessControl.UseRoles({
-    resource: "Event",
-    action: "update",
-    possession: "any",
-  })
   async disconnectFeedbacks(
     @common.Param() params: EventWhereUniqueInput,
     @common.Body() body: FeedbackWhereUniqueInput[]
