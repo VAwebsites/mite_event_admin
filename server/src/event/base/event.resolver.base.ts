@@ -17,9 +17,8 @@ import * as nestAccessControl from "nest-access-control";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
-import { Public } from "../../decorators/public.decorator";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateEventArgs } from "./CreateEventArgs";
 import { UpdateEventArgs } from "./UpdateEventArgs";
 import { DeleteEventArgs } from "./DeleteEventArgs";
@@ -40,8 +39,12 @@ export class EventResolverBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
-  @Public()
   @graphql.Query(() => MetaQueryPayload)
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "read",
+    possession: "any",
+  })
   async _eventsMeta(
     @graphql.Args() args: EventFindManyArgs
   ): Promise<MetaQueryPayload> {
@@ -55,14 +58,24 @@ export class EventResolverBase {
     };
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Event])
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "read",
+    possession: "any",
+  })
   async events(@graphql.Args() args: EventFindManyArgs): Promise<Event[]> {
     return this.service.findMany(args);
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Event, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "read",
+    possession: "own",
+  })
   async event(
     @graphql.Args() args: EventFindUniqueArgs
   ): Promise<Event | null> {
@@ -73,8 +86,13 @@ export class EventResolverBase {
     return result;
   }
 
-  @Public()
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Event)
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "create",
+    possession: "any",
+  })
   async createEvent(@graphql.Args() args: CreateEventArgs): Promise<Event> {
     return await this.service.create({
       ...args,
@@ -140,8 +158,13 @@ export class EventResolverBase {
     }
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [EventRegistration])
+  @nestAccessControl.UseRoles({
+    resource: "EventRegistration",
+    action: "read",
+    possession: "any",
+  })
   async eventRegistrations(
     @graphql.Parent() parent: Event,
     @graphql.Args() args: EventRegistrationFindManyArgs
@@ -175,8 +198,13 @@ export class EventResolverBase {
     return results;
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Branch, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Branch",
+    action: "read",
+    possession: "any",
+  })
   async branch(@graphql.Parent() parent: Event): Promise<Branch | null> {
     const result = await this.service.getBranch(parent.id);
 
