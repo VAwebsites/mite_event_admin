@@ -73,6 +73,7 @@ type Event {
   description: String
   endDate: DateTime
   eventRegistrations(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): [EventRegistration!]!
+  feedbacks(orderBy: [FeedbackOrderByInput!], skip: Float, take: Float, where: FeedbackWhereInput): [Feedback!]!
   id: String!
   img: String
   startDate: DateTime
@@ -86,6 +87,7 @@ input EventCreateInput {
   description: String
   endDate: DateTime
   eventRegistrations: EventRegistrationCreateNestedManyWithoutEventsInput
+  feedbacks: FeedbackCreateNestedManyWithoutEventsInput
   img: String
   startDate: DateTime
   title: String
@@ -182,6 +184,7 @@ input EventUpdateInput {
   description: String
   endDate: DateTime
   eventRegistrations: EventRegistrationUpdateManyWithoutEventsInput
+  feedbacks: FeedbackUpdateManyWithoutEventsInput
   img: String
   startDate: DateTime
   title: String
@@ -199,6 +202,7 @@ input EventWhereInput {
   description: StringNullableFilter
   endDate: DateTimeNullableFilter
   eventRegistrations: EventRegistrationListRelationFilter
+  feedbacks: FeedbackListRelationFilter
   id: StringFilter
   img: StringNullableFilter
   startDate: DateTimeNullableFilter
@@ -207,6 +211,58 @@ input EventWhereInput {
 }
 
 input EventWhereUniqueInput {
+  id: String!
+}
+
+type Feedback {
+  createdAt: DateTime!
+  event: Event
+  id: String!
+  message: String!
+  updatedAt: DateTime!
+}
+
+input FeedbackCreateInput {
+  event: EventWhereUniqueInput
+  message: String!
+}
+
+input FeedbackCreateNestedManyWithoutEventsInput {
+  connect: [FeedbackWhereUniqueInput!]
+}
+
+input FeedbackListRelationFilter {
+  every: FeedbackWhereInput
+  none: FeedbackWhereInput
+  some: FeedbackWhereInput
+}
+
+input FeedbackOrderByInput {
+  createdAt: SortOrder
+  eventId: SortOrder
+  id: SortOrder
+  message: SortOrder
+  updatedAt: SortOrder
+}
+
+input FeedbackUpdateInput {
+  event: EventWhereUniqueInput
+  message: String
+}
+
+input FeedbackUpdateManyWithoutEventsInput {
+  connect: [FeedbackWhereUniqueInput!]
+  disconnect: [FeedbackWhereUniqueInput!]
+  set: [FeedbackWhereUniqueInput!]
+}
+
+input FeedbackWhereInput {
+  event: EventWhereUniqueInput
+  id: StringFilter
+  message: StringFilter
+}
+
+input FeedbackWhereUniqueInput {
   id: String!
 }
 
@@ -223,15 +279,18 @@ type Mutation {
   createBranch(data: BranchCreateInput!): Branch!
   createEvent(data: EventCreateInput!): Event!
   createEventRegistration(data: EventRegistrationCreateInput!): EventRegistration!
+  createFeedback(data: FeedbackCreateInput!): Feedback!
   createUser(data: UserCreateInput!): User!
   deleteBranch(where: BranchWhereUniqueInput!): Branch!
   deleteEvent(where: EventWhereUniqueInput!): Event!
   deleteEventRegistration(where: EventRegistrationWhereUniqueInput!): EventRegistration!
+  deleteFeedback(where: FeedbackWhereUniqueInput!): Feedback!
   deleteUser(where: UserWhereUniqueInput!): User!
   login(credentials: Credentials!): UserInfo!
   updateBranch(data: BranchUpdateInput!, where: BranchWhereUniqueInput!): Branch!
   updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event!
   updateEventRegistration(data: EventRegistrationUpdateInput!, where: EventRegistrationWhereUniqueInput!): EventRegistration!
+  updateFeedback(data: FeedbackUpdateInput!, where: FeedbackWhereUniqueInput!): Feedback!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
 }
 
@@ -239,6 +298,7 @@ type Query {
   _branchesMeta(orderBy: [BranchOrderByInput!], skip: Float, take: Float, where: BranchWhereInput): MetaQueryPayload!
   _eventRegistrationsMeta(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): MetaQueryPayload!
   _eventsMeta(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): MetaQueryPayload!
+  _feedbacksMeta(orderBy: [FeedbackOrderByInput!], skip: Float, take: Float, where: FeedbackWhereInput): MetaQueryPayload!
   _usersMeta(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): MetaQueryPayload!
   branch(where: BranchWhereUniqueInput!): Branch
   branches(orderBy: [BranchOrderByInput!], skip: Float, take: Float, where: BranchWhereInput): [Branch!]!
@@ -246,6 +306,8 @@ type Query {
   eventRegistration(where: EventRegistrationWhereUniqueInput!): EventRegistration
   eventRegistrations(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): [EventRegistration!]!
   events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
+  feedback(where: FeedbackWhereUniqueInput!): Feedback
+  feedbacks(orderBy: [FeedbackOrderByInput!], skip: Float, take: Float, where: FeedbackWhereInput): [Feedback!]!
   user(where: UserWhereUniqueInput!): User
   userInfo: UserInfo!
   users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
