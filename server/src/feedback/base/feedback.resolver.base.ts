@@ -19,7 +19,6 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { Public } from "../../decorators/public.decorator";
 import { CreateFeedbackArgs } from "./CreateFeedbackArgs";
 import { UpdateFeedbackArgs } from "./UpdateFeedbackArgs";
 import { DeleteFeedbackArgs } from "./DeleteFeedbackArgs";
@@ -163,8 +162,13 @@ export class FeedbackResolverBase {
     }
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Event, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "read",
+    possession: "any",
+  })
   async event(@graphql.Parent() parent: Feedback): Promise<Event | null> {
     const result = await this.service.getEvent(parent.id);
 

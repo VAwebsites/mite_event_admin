@@ -19,7 +19,6 @@ import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { EventService } from "../event.service";
-import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { EventCreateInput } from "./EventCreateInput";
@@ -42,9 +41,14 @@ export class EventControllerBase {
     protected readonly service: EventService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  @Public()
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Event })
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "create",
+    possession: "any",
+  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -77,10 +81,15 @@ export class EventControllerBase {
     });
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Event] })
   @ApiNestedQuery(EventFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "read",
+    possession: "any",
+  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -108,10 +117,15 @@ export class EventControllerBase {
     });
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Event })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Event",
+    action: "read",
+    possession: "own",
+  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -245,9 +259,14 @@ export class EventControllerBase {
     }
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/eventRegistrations")
   @ApiNestedQuery(EventRegistrationFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "EventRegistration",
+    action: "read",
+    possession: "any",
+  })
   async findManyEventRegistrations(
     @common.Req() request: Request,
     @common.Param() params: EventWhereUniqueInput

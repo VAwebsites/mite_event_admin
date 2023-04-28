@@ -19,8 +19,8 @@ import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { EventRegistrationService } from "../eventRegistration.service";
-import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { EventRegistrationCreateInput } from "./EventRegistrationCreateInput";
 import { EventRegistrationWhereInput } from "./EventRegistrationWhereInput";
 import { EventRegistrationWhereUniqueInput } from "./EventRegistrationWhereUniqueInput";
@@ -35,9 +35,14 @@ export class EventRegistrationControllerBase {
     protected readonly service: EventRegistrationService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  @Public()
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: EventRegistration })
+  @nestAccessControl.UseRoles({
+    resource: "EventRegistration",
+    action: "create",
+    possession: "any",
+  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -77,10 +82,15 @@ export class EventRegistrationControllerBase {
     });
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [EventRegistration] })
   @ApiNestedQuery(EventRegistrationFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "EventRegistration",
+    action: "read",
+    possession: "any",
+  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -109,10 +119,15 @@ export class EventRegistrationControllerBase {
     });
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: EventRegistration })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "EventRegistration",
+    action: "read",
+    possession: "own",
+  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
