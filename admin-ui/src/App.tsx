@@ -21,10 +21,10 @@ import { EventRegistrationList } from "./eventRegistration/EventRegistrationList
 import { EventRegistrationCreate } from "./eventRegistration/EventRegistrationCreate";
 import { EventRegistrationEdit } from "./eventRegistration/EventRegistrationEdit";
 import { EventRegistrationShow } from "./eventRegistration/EventRegistrationShow";
-import { FeedbackList } from "./feedback/FeedbackList";
-import { FeedbackCreate } from "./feedback/FeedbackCreate";
-import { FeedbackEdit } from "./feedback/FeedbackEdit";
-import { FeedbackShow } from "./feedback/FeedbackShow";
+import { CategoryList } from "./category/CategoryList";
+import { CategoryCreate } from "./category/CategoryCreate";
+import { CategoryEdit } from "./category/CategoryEdit";
+import { CategoryShow } from "./category/CategoryShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -80,11 +80,11 @@ const App = (): React.ReactElement => {
           show={EventRegistrationShow}
         />
         <Resource
-          name="Feedback"
-          list={FeedbackList}
-          edit={FeedbackEdit}
-          create={FeedbackCreate}
-          show={FeedbackShow}
+          name="Category"
+          list={CategoryList}
+          edit={CategoryEdit}
+          create={CategoryCreate}
+          show={CategoryShow}
         />
       </Admin>
     </div>

@@ -12,7 +12,12 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { EventWhereUniqueInput } from "../../event/base/EventWhereUniqueInput";
-import { ValidateNested } from "class-validator";
+import {
+  ValidateNested,
+  IsString,
+  IsOptional,
+  IsBoolean,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
@@ -26,6 +31,28 @@ class EventRegistrationCreateInput {
   @Type(() => EventWhereUniqueInput)
   @Field(() => EventWhereUniqueInput)
   event!: EventWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  feedback?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Field(() => Boolean, {
+    nullable: true,
+  })
+  isAttended?: boolean | null;
 
   @ApiProperty({
     required: true,

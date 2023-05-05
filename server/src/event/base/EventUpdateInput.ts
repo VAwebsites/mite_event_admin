@@ -12,10 +12,17 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { BranchWhereUniqueInput } from "../../branch/base/BranchWhereUniqueInput";
-import { ValidateNested, IsOptional, IsString, IsDate } from "class-validator";
+import {
+  ValidateNested,
+  IsOptional,
+  IsString,
+  IsDate,
+  IsEnum,
+} from "class-validator";
 import { Type } from "class-transformer";
+import { CategoryWhereUniqueInput } from "../../category/base/CategoryWhereUniqueInput";
 import { EventRegistrationUpdateManyWithoutEventsInput } from "./EventRegistrationUpdateManyWithoutEventsInput";
-import { FeedbackUpdateManyWithoutEventsInput } from "./FeedbackUpdateManyWithoutEventsInput";
+import { EnumEventEventType } from "./EnumEventEventType";
 
 @InputType()
 class EventUpdateInput {
@@ -30,6 +37,18 @@ class EventUpdateInput {
     nullable: true,
   })
   branch?: BranchWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => CategoryWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => CategoryWhereUniqueInput)
+  @IsOptional()
+  @Field(() => CategoryWhereUniqueInput, {
+    nullable: true,
+  })
+  category?: CategoryWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -67,15 +86,14 @@ class EventUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => FeedbackUpdateManyWithoutEventsInput,
+    enum: EnumEventEventType,
   })
-  @ValidateNested()
-  @Type(() => FeedbackUpdateManyWithoutEventsInput)
+  @IsEnum(EnumEventEventType)
   @IsOptional()
-  @Field(() => FeedbackUpdateManyWithoutEventsInput, {
+  @Field(() => EnumEventEventType, {
     nullable: true,
   })
-  feedbacks?: FeedbackUpdateManyWithoutEventsInput;
+  eventType?: "Individual" | "Team" | null;
 
   @ApiProperty({
     required: false,

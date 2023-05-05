@@ -184,9 +184,16 @@ export class BranchControllerBase {
           },
         },
 
+        category: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         description: true,
         endDate: true,
+        eventType: true,
         id: true,
         img: true,
         startDate: true,

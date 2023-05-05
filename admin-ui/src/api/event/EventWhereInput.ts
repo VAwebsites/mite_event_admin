@@ -1,16 +1,17 @@
 import { BranchWhereUniqueInput } from "../branch/BranchWhereUniqueInput";
+import { CategoryWhereUniqueInput } from "../category/CategoryWhereUniqueInput";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { EventRegistrationListRelationFilter } from "../eventRegistration/EventRegistrationListRelationFilter";
-import { FeedbackListRelationFilter } from "../feedback/FeedbackListRelationFilter";
 import { StringFilter } from "../../util/StringFilter";
 
 export type EventWhereInput = {
   branch?: BranchWhereUniqueInput;
+  category?: CategoryWhereUniqueInput;
   description?: StringNullableFilter;
   endDate?: DateTimeNullableFilter;
   eventRegistrations?: EventRegistrationListRelationFilter;
-  feedbacks?: FeedbackListRelationFilter;
+  eventType?: "Individual" | "Team";
   id?: StringFilter;
   img?: StringNullableFilter;
   startDate?: DateTimeNullableFilter;

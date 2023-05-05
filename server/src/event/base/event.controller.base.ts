@@ -29,9 +29,6 @@ import { Event } from "./Event";
 import { EventRegistrationFindManyArgs } from "../../eventRegistration/base/EventRegistrationFindManyArgs";
 import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
 import { EventRegistrationWhereUniqueInput } from "../../eventRegistration/base/EventRegistrationWhereUniqueInput";
-import { FeedbackFindManyArgs } from "../../feedback/base/FeedbackFindManyArgs";
-import { Feedback } from "../../feedback/base/Feedback";
-import { FeedbackWhereUniqueInput } from "../../feedback/base/FeedbackWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -54,6 +51,12 @@ export class EventControllerBase {
         branch: {
           connect: data.branch,
         },
+
+        category: data.category
+          ? {
+              connect: data.category,
+            }
+          : undefined,
       },
       select: {
         branch: {
@@ -62,9 +65,16 @@ export class EventControllerBase {
           },
         },
 
+        category: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         description: true,
         endDate: true,
+        eventType: true,
         id: true,
         img: true,
         startDate: true,
@@ -93,9 +103,16 @@ export class EventControllerBase {
           },
         },
 
+        category: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         description: true,
         endDate: true,
+        eventType: true,
         id: true,
         img: true,
         startDate: true,
@@ -125,9 +142,16 @@ export class EventControllerBase {
           },
         },
 
+        category: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         description: true,
         endDate: true,
+        eventType: true,
         id: true,
         img: true,
         startDate: true,
@@ -164,6 +188,12 @@ export class EventControllerBase {
           branch: {
             connect: data.branch,
           },
+
+          category: data.category
+            ? {
+                connect: data.category,
+              }
+            : undefined,
         },
         select: {
           branch: {
@@ -172,9 +202,16 @@ export class EventControllerBase {
             },
           },
 
+          category: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
           description: true,
           endDate: true,
+          eventType: true,
           id: true,
           img: true,
           startDate: true,
@@ -213,9 +250,16 @@ export class EventControllerBase {
             },
           },
 
+          category: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
           description: true,
           endDate: true,
+          eventType: true,
           id: true,
           img: true,
           startDate: true,
@@ -253,7 +297,9 @@ export class EventControllerBase {
           },
         },
 
+        feedback: true,
         id: true,
+        isAttended: true,
         updatedAt: true,
 
         user: {
@@ -315,92 +361,6 @@ export class EventControllerBase {
   ): Promise<void> {
     const data = {
       eventRegistrations: {
-        disconnect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @Public()
-  @common.Get("/:id/feedbacks")
-  @ApiNestedQuery(FeedbackFindManyArgs)
-  async findManyFeedbacks(
-    @common.Req() request: Request,
-    @common.Param() params: EventWhereUniqueInput
-  ): Promise<Feedback[]> {
-    const query = plainToClass(FeedbackFindManyArgs, request.query);
-    const results = await this.service.findFeedbacks(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-
-        event: {
-          select: {
-            id: true,
-          },
-        },
-
-        id: true,
-        message: true,
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @Public()
-  @common.Post("/:id/feedbacks")
-  async connectFeedbacks(
-    @common.Param() params: EventWhereUniqueInput,
-    @common.Body() body: FeedbackWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      feedbacks: {
-        connect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @Public()
-  @common.Patch("/:id/feedbacks")
-  async updateFeedbacks(
-    @common.Param() params: EventWhereUniqueInput,
-    @common.Body() body: FeedbackWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      feedbacks: {
-        set: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @Public()
-  @common.Delete("/:id/feedbacks")
-  async disconnectFeedbacks(
-    @common.Param() params: EventWhereUniqueInput,
-    @common.Body() body: FeedbackWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      feedbacks: {
         disconnect: body,
       },
     };

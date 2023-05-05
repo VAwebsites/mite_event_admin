@@ -64,7 +64,9 @@ export class EventRegistrationControllerBase {
           },
         },
 
+        feedback: true,
         id: true,
+        isAttended: true,
         updatedAt: true,
 
         user: {
@@ -96,7 +98,9 @@ export class EventRegistrationControllerBase {
           },
         },
 
+        feedback: true,
         id: true,
+        isAttended: true,
         updatedAt: true,
 
         user: {
@@ -129,7 +133,9 @@ export class EventRegistrationControllerBase {
           },
         },
 
+        feedback: true,
         id: true,
+        isAttended: true,
         updatedAt: true,
 
         user: {
@@ -181,7 +187,9 @@ export class EventRegistrationControllerBase {
             },
           },
 
+          feedback: true,
           id: true,
+          isAttended: true,
           updatedAt: true,
 
           user: {
@@ -223,7 +231,9 @@ export class EventRegistrationControllerBase {
             },
           },
 
+          feedback: true,
           id: true,
+          isAttended: true,
           updatedAt: true,
 
           user: {

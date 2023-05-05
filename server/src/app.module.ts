@@ -5,7 +5,7 @@ import { UserModule } from "./user/user.module";
 import { BranchModule } from "./branch/branch.module";
 import { EventModule } from "./event/event.module";
 import { EventRegistrationModule } from "./eventRegistration/eventRegistration.module";
-import { FeedbackModule } from "./feedback/feedback.module";
+import { CategoryModule } from "./category/category.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -26,7 +26,7 @@ import { AuthModule } from "./auth/auth.module";
     BranchModule,
     EventModule,
     EventRegistrationModule,
-    FeedbackModule,
+    CategoryModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,

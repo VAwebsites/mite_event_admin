@@ -1,14 +1,15 @@
 import { Branch } from "../branch/Branch";
+import { Category } from "../category/Category";
 import { EventRegistration } from "../eventRegistration/EventRegistration";
-import { Feedback } from "../feedback/Feedback";
 
 export type Event = {
   branch?: Branch;
+  category?: Category | null;
   createdAt: Date;
   description: string | null;
   endDate: Date | null;
   eventRegistrations?: Array<EventRegistration>;
-  feedbacks?: Array<Feedback>;
+  eventType?: "Individual" | "Team" | null;
   id: string;
   img: string | null;
   startDate: Date | null;
