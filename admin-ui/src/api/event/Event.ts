@@ -3,6 +3,7 @@ import { Category } from "../category/Category";
 import { EventRegistration } from "../eventRegistration/EventRegistration";
 
 export type Event = {
+  attendanceCode: string | null;
   branch?: Branch;
   category?: Category | null;
   createdAt: Date;

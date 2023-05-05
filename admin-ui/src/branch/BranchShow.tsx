@@ -25,6 +25,7 @@ export const BranchShow = (props: ShowProps): React.ReactElement => {
         <DateField source="updatedAt" label="Updated At" />
         <ReferenceManyField reference="Event" target="BranchId" label="Events">
           <Datagrid rowClick="show">
+            <TextField label="attendance_code" source="attendanceCode" />
             <ReferenceField
               label="Branch"
               source="branch.id"

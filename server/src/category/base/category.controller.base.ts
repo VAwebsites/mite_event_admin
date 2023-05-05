@@ -201,6 +201,8 @@ export class CategoryControllerBase {
     const results = await this.service.findEvents(params.id, {
       ...query,
       select: {
+        attendanceCode: true,
+
         branch: {
           select: {
             id: true,

@@ -19,6 +19,7 @@ import { EventService } from "../event.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
+  attendanceCode: "exampleAttendanceCode",
   createdAt: new Date(),
   description: "exampleDescription",
   endDate: new Date(),
@@ -31,6 +32,7 @@ const CREATE_INPUT = {
   venue: "exampleVenue",
 };
 const CREATE_RESULT = {
+  attendanceCode: "exampleAttendanceCode",
   createdAt: new Date(),
   description: "exampleDescription",
   endDate: new Date(),
@@ -44,6 +46,7 @@ const CREATE_RESULT = {
 };
 const FIND_MANY_RESULT = [
   {
+    attendanceCode: "exampleAttendanceCode",
     createdAt: new Date(),
     description: "exampleDescription",
     endDate: new Date(),
@@ -57,6 +60,7 @@ const FIND_MANY_RESULT = [
   },
 ];
 const FIND_ONE_RESULT = {
+  attendanceCode: "exampleAttendanceCode",
   createdAt: new Date(),
   description: "exampleDescription",
   endDate: new Date(),

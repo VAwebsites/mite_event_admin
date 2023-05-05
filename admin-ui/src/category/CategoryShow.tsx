@@ -28,6 +28,7 @@ export const CategoryShow = (props: ShowProps): React.ReactElement => {
           label="Events"
         >
           <Datagrid rowClick="show">
+            <TextField label="attendance_code" source="attendanceCode" />
             <ReferenceField
               label="Branch"
               source="branch.id"

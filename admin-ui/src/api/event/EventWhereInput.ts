@@ -1,11 +1,12 @@
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { BranchWhereUniqueInput } from "../branch/BranchWhereUniqueInput";
 import { CategoryWhereUniqueInput } from "../category/CategoryWhereUniqueInput";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { EventRegistrationListRelationFilter } from "../eventRegistration/EventRegistrationListRelationFilter";
 import { StringFilter } from "../../util/StringFilter";
 
 export type EventWhereInput = {
+  attendanceCode?: StringNullableFilter;
   branch?: BranchWhereUniqueInput;
   category?: CategoryWhereUniqueInput;
   description?: StringNullableFilter;

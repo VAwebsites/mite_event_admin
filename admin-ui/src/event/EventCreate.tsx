@@ -4,9 +4,9 @@ import {
   Create,
   SimpleForm,
   CreateProps,
+  TextInput,
   ReferenceInput,
   SelectInput,
-  TextInput,
   DateTimeInput,
   ReferenceArrayInput,
   SelectArrayInput,
@@ -20,6 +20,7 @@ export const EventCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
+        <TextInput label="attendance_code" source="attendanceCode" />
         <ReferenceInput source="branch.id" reference="Branch" label="Branch">
           <SelectInput optionText={BranchTitle} />
         </ReferenceInput>

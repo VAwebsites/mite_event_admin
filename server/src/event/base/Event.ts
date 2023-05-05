@@ -11,14 +11,14 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { Branch } from "../../branch/base/Branch";
 import {
-  ValidateNested,
-  IsOptional,
-  IsDate,
   IsString,
+  IsOptional,
+  ValidateNested,
+  IsDate,
   IsEnum,
 } from "class-validator";
+import { Branch } from "../../branch/base/Branch";
 import { Type } from "class-transformer";
 import { Category } from "../../category/base/Category";
 import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
@@ -26,6 +26,17 @@ import { EnumEventEventType } from "./EnumEventEventType";
 
 @ObjectType()
 class Event {
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  attendanceCode!: string | null;
+
   @ApiProperty({
     required: true,
     type: () => Branch,
