@@ -45,6 +45,10 @@ export const BranchShow = (props: ShowProps): React.ReactElement => {
             <TextField label="Event Type" source="eventType" />
             <TextField label="ID" source="id" />
             <TextField label="img" source="img" />
+            <TextField
+              label="Registration End Date"
+              source="registrationEndDate"
+            />
             <TextField label="Start date" source="startDate" />
             <TextField label="Title" source="title" />
             <DateField source="updatedAt" label="Updated At" />

@@ -10,6 +10,7 @@ export type EventUpdateInput = {
   eventRegistrations?: EventRegistrationUpdateManyWithoutEventsInput;
   eventType?: "Individual" | "Team" | null;
   img?: string | null;
+  registrationEndDate?: Date | null;
   startDate?: Date | null;
   title?: string | null;
   venue?: string | null;

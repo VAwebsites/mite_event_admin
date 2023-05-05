@@ -9,6 +9,7 @@ export type EventOrderByInput = {
   eventType?: SortOrder;
   id?: SortOrder;
   img?: SortOrder;
+  registrationEndDate?: SortOrder;
   startDate?: SortOrder;
   title?: SortOrder;
   updatedAt?: SortOrder;

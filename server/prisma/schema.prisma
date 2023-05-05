@@ -36,21 +36,22 @@ model Branch {
 }
 
 model Event {
-  branch             Branch              @relation(fields: [branchId], references: [id])
-  branchId           String
-  category           Category?           @relation(fields: [categoryId], references: [id])
-  categoryId         String?
-  createdAt          DateTime            @default(now())
-  description        String?
-  endDate            DateTime?
-  eventRegistrations EventRegistration[]
-  eventType          EnumEventEventType?
-  id                 String              @id @default(auto()) @map("_id") @mongo.ObjectId
-  img                String?
-  startDate          DateTime?
-  title              String?
-  updatedAt          DateTime            @updatedAt
-  venue              String?
+  branch              Branch              @relation(fields: [branchId], references: [id])
+  branchId            String
+  category            Category?           @relation(fields: [categoryId], references: [id])
+  categoryId          String?
+  createdAt           DateTime            @default(now())
+  description         String?
+  endDate             DateTime?
+  eventRegistrations  EventRegistration[]
+  eventType           EnumEventEventType?
+  id                  String              @id @default(auto()) @map("_id") @mongo.ObjectId
+  img                 String?
+  registrationEndDate DateTime?
+  startDate           DateTime?
+  title               String?
+  updatedAt           DateTime            @updatedAt
+  venue               String?
 }
 
 model EventRegistration {

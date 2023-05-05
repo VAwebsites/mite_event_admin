@@ -123,6 +123,17 @@ class EventWhereInput {
   @Field(() => DateTimeNullableFilter, {
     nullable: true,
   })
+  registrationEndDate?: DateTimeNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: DateTimeNullableFilter,
+  })
+  @Type(() => DateTimeNullableFilter)
+  @IsOptional()
+  @Field(() => DateTimeNullableFilter, {
+    nullable: true,
+  })
   startDate?: DateTimeNullableFilter;
 
   @ApiProperty({

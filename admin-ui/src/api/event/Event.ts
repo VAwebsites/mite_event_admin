@@ -12,6 +12,7 @@ export type Event = {
   eventType?: "Individual" | "Team" | null;
   id: string;
   img: string | null;
+  registrationEndDate: Date | null;
   startDate: Date | null;
   title: string | null;
   updatedAt: Date;
