@@ -12,6 +12,7 @@ import {
 } from "react-admin";
 
 import { BRANCH_TITLE_FIELD } from "./BranchTitle";
+import { CATEGORY_TITLE_FIELD } from "../category/CategoryTitle";
 
 export const BranchShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -30,9 +31,17 @@ export const BranchShow = (props: ShowProps): React.ReactElement => {
             >
               <TextField source={BRANCH_TITLE_FIELD} />
             </ReferenceField>
+            <ReferenceField
+              label="category"
+              source="category.id"
+              reference="Category"
+            >
+              <TextField source={CATEGORY_TITLE_FIELD} />
+            </ReferenceField>
             <DateField source="createdAt" label="Created At" />
             <TextField label="Description" source="description" />
             <TextField label="End date" source="endDate" />
+            <TextField label="Event Type" source="eventType" />
             <TextField label="ID" source="id" />
             <TextField label="img" source="img" />
             <TextField label="Start date" source="startDate" />

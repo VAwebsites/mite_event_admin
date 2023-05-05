@@ -1,13 +1,14 @@
 import { BranchWhereUniqueInput } from "../branch/BranchWhereUniqueInput";
+import { CategoryWhereUniqueInput } from "../category/CategoryWhereUniqueInput";
 import { EventRegistrationCreateNestedManyWithoutEventsInput } from "./EventRegistrationCreateNestedManyWithoutEventsInput";
-import { FeedbackCreateNestedManyWithoutEventsInput } from "./FeedbackCreateNestedManyWithoutEventsInput";
 
 export type EventCreateInput = {
   branch: BranchWhereUniqueInput;
+  category?: CategoryWhereUniqueInput | null;
   description?: string | null;
   endDate?: Date | null;
   eventRegistrations?: EventRegistrationCreateNestedManyWithoutEventsInput;
-  feedbacks?: FeedbackCreateNestedManyWithoutEventsInput;
+  eventType?: "Individual" | "Team" | null;
   img?: string | null;
   startDate?: Date | null;
   title?: string | null;

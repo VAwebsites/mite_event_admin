@@ -12,10 +12,17 @@ https://docs.amplication.com/how-to/custom-code
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { Branch } from "../../branch/base/Branch";
-import { ValidateNested, IsDate, IsString, IsOptional } from "class-validator";
+import {
+  ValidateNested,
+  IsOptional,
+  IsDate,
+  IsString,
+  IsEnum,
+} from "class-validator";
 import { Type } from "class-transformer";
+import { Category } from "../../category/base/Category";
 import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
-import { Feedback } from "../../feedback/base/Feedback";
+import { EnumEventEventType } from "./EnumEventEventType";
 
 @ObjectType()
 class Event {
@@ -26,6 +33,15 @@ class Event {
   @ValidateNested()
   @Type(() => Branch)
   branch?: Branch;
+
+  @ApiProperty({
+    required: false,
+    type: () => Category,
+  })
+  @ValidateNested()
+  @Type(() => Category)
+  @IsOptional()
+  category?: Category | null;
 
   @ApiProperty({
     required: true,
@@ -68,12 +84,14 @@ class Event {
 
   @ApiProperty({
     required: false,
-    type: () => [Feedback],
+    enum: EnumEventEventType,
   })
-  @ValidateNested()
-  @Type(() => Feedback)
+  @IsEnum(EnumEventEventType)
   @IsOptional()
-  feedbacks?: Array<Feedback>;
+  @Field(() => EnumEventEventType, {
+    nullable: true,
+  })
+  eventType?: "Individual" | "Team" | null;
 
   @ApiProperty({
     required: true,

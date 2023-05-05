@@ -14,8 +14,8 @@ import {
   Prisma,
   Event,
   EventRegistration,
-  Feedback,
   Branch,
+  Category,
 } from "@prisma/client";
 
 export class EventServiceBase {
@@ -64,22 +64,19 @@ export class EventServiceBase {
       .eventRegistrations(args);
   }
 
-  async findFeedbacks(
-    parentId: string,
-    args: Prisma.FeedbackFindManyArgs
-  ): Promise<Feedback[]> {
-    return this.prisma.event
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .feedbacks(args);
-  }
-
   async getBranch(parentId: string): Promise<Branch | null> {
     return this.prisma.event
       .findUnique({
         where: { id: parentId },
       })
       .branch();
+  }
+
+  async getCategory(parentId: string): Promise<Category | null> {
+    return this.prisma.event
+      .findUnique({
+        where: { id: parentId },
+      })
+      .category();
   }
 }

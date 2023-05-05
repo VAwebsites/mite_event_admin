@@ -12,12 +12,13 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { BranchWhereUniqueInput } from "../../branch/base/BranchWhereUniqueInput";
-import { ValidateNested, IsOptional } from "class-validator";
+import { ValidateNested, IsOptional, IsEnum } from "class-validator";
 import { Type } from "class-transformer";
+import { CategoryWhereUniqueInput } from "../../category/base/CategoryWhereUniqueInput";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { EventRegistrationListRelationFilter } from "../../eventRegistration/base/EventRegistrationListRelationFilter";
-import { FeedbackListRelationFilter } from "../../feedback/base/FeedbackListRelationFilter";
+import { EnumEventEventType } from "./EnumEventEventType";
 import { StringFilter } from "../../util/StringFilter";
 
 @InputType()
@@ -33,6 +34,18 @@ class EventWhereInput {
     nullable: true,
   })
   branch?: BranchWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => CategoryWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => CategoryWhereUniqueInput)
+  @IsOptional()
+  @Field(() => CategoryWhereUniqueInput, {
+    nullable: true,
+  })
+  category?: CategoryWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -70,15 +83,14 @@ class EventWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => FeedbackListRelationFilter,
+    enum: EnumEventEventType,
   })
-  @ValidateNested()
-  @Type(() => FeedbackListRelationFilter)
+  @IsEnum(EnumEventEventType)
   @IsOptional()
-  @Field(() => FeedbackListRelationFilter, {
+  @Field(() => EnumEventEventType, {
     nullable: true,
   })
-  feedbacks?: FeedbackListRelationFilter;
+  eventType?: "Individual" | "Team";
 
   @ApiProperty({
     required: false,

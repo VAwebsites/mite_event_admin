@@ -18,6 +18,7 @@ import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { Public } from "../../decorators/public.decorator";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { CreateEventArgs } from "./CreateEventArgs";
 import { UpdateEventArgs } from "./UpdateEventArgs";
 import { DeleteEventArgs } from "./DeleteEventArgs";
@@ -26,9 +27,8 @@ import { EventFindUniqueArgs } from "./EventFindUniqueArgs";
 import { Event } from "./Event";
 import { EventRegistrationFindManyArgs } from "../../eventRegistration/base/EventRegistrationFindManyArgs";
 import { EventRegistration } from "../../eventRegistration/base/EventRegistration";
-import { FeedbackFindManyArgs } from "../../feedback/base/FeedbackFindManyArgs";
-import { Feedback } from "../../feedback/base/Feedback";
 import { Branch } from "../../branch/base/Branch";
+import { Category } from "../../category/base/Category";
 import { EventService } from "../event.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Event)
@@ -82,6 +82,12 @@ export class EventResolverBase {
         branch: {
           connect: args.data.branch,
         },
+
+        category: args.data.category
+          ? {
+              connect: args.data.category,
+            }
+          : undefined,
       },
     });
   }
@@ -100,6 +106,12 @@ export class EventResolverBase {
           branch: {
             connect: args.data.branch,
           },
+
+          category: args.data.category
+            ? {
+                connect: args.data.category,
+              }
+            : undefined,
         },
       });
     } catch (error) {
@@ -145,24 +157,25 @@ export class EventResolverBase {
   }
 
   @Public()
-  @graphql.ResolveField(() => [Feedback])
-  async feedbacks(
-    @graphql.Parent() parent: Event,
-    @graphql.Args() args: FeedbackFindManyArgs
-  ): Promise<Feedback[]> {
-    const results = await this.service.findFeedbacks(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @Public()
   @graphql.ResolveField(() => Branch, { nullable: true })
   async branch(@graphql.Parent() parent: Event): Promise<Branch | null> {
     const result = await this.service.getBranch(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Category, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Category",
+    action: "read",
+    possession: "any",
+  })
+  async category(@graphql.Parent() parent: Event): Promise<Category | null> {
+    const result = await this.service.getCategory(parent.id);
 
     if (!result) {
       return null;

@@ -3,5 +3,7 @@ import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type EventRegistrationCreateInput = {
   event: EventWhereUniqueInput;
+  feedback?: string | null;
+  isAttended?: boolean | null;
   user: UserWhereUniqueInput;
 };

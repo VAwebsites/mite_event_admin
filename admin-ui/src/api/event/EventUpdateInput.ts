@@ -1,13 +1,14 @@
 import { BranchWhereUniqueInput } from "../branch/BranchWhereUniqueInput";
+import { CategoryWhereUniqueInput } from "../category/CategoryWhereUniqueInput";
 import { EventRegistrationUpdateManyWithoutEventsInput } from "./EventRegistrationUpdateManyWithoutEventsInput";
-import { FeedbackUpdateManyWithoutEventsInput } from "./FeedbackUpdateManyWithoutEventsInput";
 
 export type EventUpdateInput = {
   branch?: BranchWhereUniqueInput;
+  category?: CategoryWhereUniqueInput | null;
   description?: string | null;
   endDate?: Date | null;
   eventRegistrations?: EventRegistrationUpdateManyWithoutEventsInput;
-  feedbacks?: FeedbackUpdateManyWithoutEventsInput;
+  eventType?: "Individual" | "Team" | null;
   img?: string | null;
   startDate?: Date | null;
   title?: string | null;

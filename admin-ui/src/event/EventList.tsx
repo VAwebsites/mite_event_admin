@@ -9,6 +9,7 @@ import {
 } from "react-admin";
 import Pagination from "../Components/Pagination";
 import { BRANCH_TITLE_FIELD } from "../branch/BranchTitle";
+import { CATEGORY_TITLE_FIELD } from "../category/CategoryTitle";
 
 export const EventList = (props: ListProps): React.ReactElement => {
   return (
@@ -23,9 +24,17 @@ export const EventList = (props: ListProps): React.ReactElement => {
         <ReferenceField label="Branch" source="branch.id" reference="Branch">
           <TextField source={BRANCH_TITLE_FIELD} />
         </ReferenceField>
+        <ReferenceField
+          label="category"
+          source="category.id"
+          reference="Category"
+        >
+          <TextField source={CATEGORY_TITLE_FIELD} />
+        </ReferenceField>
         <DateField source="createdAt" label="Created At" />
         <TextField label="Description" source="description" />
         <TextField label="End date" source="endDate" />
+        <TextField label="Event Type" source="eventType" />
         <TextField label="ID" source="id" />
         <TextField label="img" source="img" />
         <TextField label="Start date" source="startDate" />

@@ -4,7 +4,9 @@ import { User } from "../user/User";
 export type EventRegistration = {
   createdAt: Date;
   event?: Event;
+  feedback: string | null;
   id: string;
+  isAttended: boolean | null;
   updatedAt: Date;
   user?: User;
 };
