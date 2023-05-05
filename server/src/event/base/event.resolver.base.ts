@@ -18,7 +18,6 @@ import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { Public } from "../../decorators/public.decorator";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { CreateEventArgs } from "./CreateEventArgs";
 import { UpdateEventArgs } from "./UpdateEventArgs";
 import { DeleteEventArgs } from "./DeleteEventArgs";
@@ -167,13 +166,8 @@ export class EventResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => Category, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "read",
-    possession: "any",
-  })
   async category(@graphql.Parent() parent: Event): Promise<Category | null> {
     const result = await this.service.getCategory(parent.id);
 
