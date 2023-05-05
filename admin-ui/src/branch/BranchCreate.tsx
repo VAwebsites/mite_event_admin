@@ -24,6 +24,7 @@ export const BranchCreate = (props: CreateProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={EventTitle} />
         </ReferenceArrayInput>
+        <TextInput label="img" source="img" />
         <TextInput label="Name" source="name" />
         <ReferenceArrayInput
           source="users"

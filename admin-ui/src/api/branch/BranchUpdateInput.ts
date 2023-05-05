@@ -3,6 +3,7 @@ import { UserUpdateManyWithoutBranchesInput } from "./UserUpdateManyWithoutBranc
 
 export type BranchUpdateInput = {
   events?: EventUpdateManyWithoutBranchesInput;
+  img?: string | null;
   name?: string;
   users?: UserUpdateManyWithoutBranchesInput;
 };

@@ -15,6 +15,7 @@ import { EventListRelationFilter } from "../../event/base/EventListRelationFilte
 import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { StringFilter } from "../../util/StringFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
 
 @InputType()
@@ -41,6 +42,17 @@ class BranchWhereInput {
     nullable: true,
   })
   id?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  img?: StringNullableFilter;
 
   @ApiProperty({
     required: false,
