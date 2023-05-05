@@ -97,6 +97,15 @@ class EventOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  registrationEndDate?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   startDate?: SortOrder;
 
   @ApiProperty({

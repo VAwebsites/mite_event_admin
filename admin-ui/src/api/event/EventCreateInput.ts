@@ -10,6 +10,7 @@ export type EventCreateInput = {
   eventRegistrations?: EventRegistrationCreateNestedManyWithoutEventsInput;
   eventType?: "Individual" | "Team" | null;
   img?: string | null;
+  registrationEndDate?: Date | null;
   startDate?: Date | null;
   title?: string | null;
   venue?: string | null;

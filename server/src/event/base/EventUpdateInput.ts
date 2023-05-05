@@ -115,6 +115,17 @@ class EventUpdateInput {
   @Field(() => Date, {
     nullable: true,
   })
+  registrationEndDate?: Date | null;
+
+  @ApiProperty({
+    required: false,
+  })
+  @IsDate()
+  @Type(() => Date)
+  @IsOptional()
+  @Field(() => Date, {
+    nullable: true,
+  })
   startDate?: Date | null;
 
   @ApiProperty({

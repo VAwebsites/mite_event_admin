@@ -219,6 +219,7 @@ export class CategoryControllerBase {
         eventType: true,
         id: true,
         img: true,
+        registrationEndDate: true,
         startDate: true,
         title: true,
         updatedAt: true,

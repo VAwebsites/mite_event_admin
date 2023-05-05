@@ -52,6 +52,10 @@ export const EventEdit = (props: EditProps): React.ReactElement => {
           optionValue="value"
         />
         <TextInput label="img" source="img" />
+        <DateTimeInput
+          label="Registration End Date"
+          source="registrationEndDate"
+        />
         <DateTimeInput label="Start date" source="startDate" />
         <TextInput label="Title" source="title" />
         <TextInput label="Venue" source="venue" />

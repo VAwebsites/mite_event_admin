@@ -14,6 +14,7 @@ export type EventWhereInput = {
   eventType?: "Individual" | "Team";
   id?: StringFilter;
   img?: StringNullableFilter;
+  registrationEndDate?: DateTimeNullableFilter;
   startDate?: DateTimeNullableFilter;
   title?: StringNullableFilter;
   venue?: StringNullableFilter;
