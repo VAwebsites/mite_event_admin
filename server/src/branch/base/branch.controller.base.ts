@@ -52,6 +52,7 @@ export class BranchControllerBase {
       select: {
         createdAt: true,
         id: true,
+        img: true,
         name: true,
         updatedAt: true,
       },
@@ -72,6 +73,7 @@ export class BranchControllerBase {
       select: {
         createdAt: true,
         id: true,
+        img: true,
         name: true,
         updatedAt: true,
       },
@@ -93,6 +95,7 @@ export class BranchControllerBase {
       select: {
         createdAt: true,
         id: true,
+        img: true,
         name: true,
         updatedAt: true,
       },
@@ -123,6 +126,7 @@ export class BranchControllerBase {
         select: {
           createdAt: true,
           id: true,
+          img: true,
           name: true,
           updatedAt: true,
         },
@@ -153,6 +157,7 @@ export class BranchControllerBase {
         select: {
           createdAt: true,
           id: true,
+          img: true,
           name: true,
           updatedAt: true,
         },
