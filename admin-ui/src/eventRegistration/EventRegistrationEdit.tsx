@@ -22,6 +22,7 @@ export const EventRegistrationEdit = (props: EditProps): React.ReactElement => {
         </ReferenceInput>
         <TextInput label="feedback" multiline source="feedback" />
         <BooleanInput label="isAttended" source="isAttended" />
+        <TextInput label="team_members" multiline source="teamMembers" />
         <ReferenceInput source="user.id" reference="User" label="User">
           <SelectInput optionText={UserTitle} />
         </ReferenceInput>

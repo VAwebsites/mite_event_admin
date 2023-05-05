@@ -7,6 +7,7 @@ export type EventRegistration = {
   feedback: string | null;
   id: string;
   isAttended: boolean | null;
+  teamMembers: string | null;
   updatedAt: Date;
   user?: User;
 };

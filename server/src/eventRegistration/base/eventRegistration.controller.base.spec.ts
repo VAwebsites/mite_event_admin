@@ -23,6 +23,7 @@ const CREATE_INPUT = {
   feedback: "exampleFeedback",
   id: "exampleId",
   isAttended: "true",
+  teamMembers: "exampleTeamMembers",
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
@@ -30,6 +31,7 @@ const CREATE_RESULT = {
   feedback: "exampleFeedback",
   id: "exampleId",
   isAttended: "true",
+  teamMembers: "exampleTeamMembers",
   updatedAt: new Date(),
 };
 const FIND_MANY_RESULT = [
@@ -38,6 +40,7 @@ const FIND_MANY_RESULT = [
     feedback: "exampleFeedback",
     id: "exampleId",
     isAttended: "true",
+    teamMembers: "exampleTeamMembers",
     updatedAt: new Date(),
   },
 ];
@@ -46,6 +49,7 @@ const FIND_ONE_RESULT = {
   feedback: "exampleFeedback",
   id: "exampleId",
   isAttended: "true",
+  teamMembers: "exampleTeamMembers",
   updatedAt: new Date(),
 };
 

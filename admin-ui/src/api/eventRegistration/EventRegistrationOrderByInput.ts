@@ -6,6 +6,7 @@ export type EventRegistrationOrderByInput = {
   feedback?: SortOrder;
   id?: SortOrder;
   isAttended?: SortOrder;
+  teamMembers?: SortOrder;
   updatedAt?: SortOrder;
   userId?: SortOrder;
 };

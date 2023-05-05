@@ -267,6 +267,7 @@ export class UserControllerBase {
         feedback: true,
         id: true,
         isAttended: true,
+        teamMembers: true,
         updatedAt: true,
 
         user: {

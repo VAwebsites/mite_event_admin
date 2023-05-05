@@ -70,6 +70,15 @@ class EventRegistrationOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  teamMembers?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   updatedAt?: SortOrder;
 
   @ApiProperty({

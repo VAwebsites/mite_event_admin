@@ -9,5 +9,6 @@ export type EventRegistrationWhereInput = {
   feedback?: StringNullableFilter;
   id?: StringFilter;
   isAttended?: BooleanNullableFilter;
+  teamMembers?: StringNullableFilter;
   user?: UserWhereUniqueInput;
 };
