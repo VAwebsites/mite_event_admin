@@ -17,8 +17,6 @@ import * as nestAccessControl from "nest-access-control";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Public } from "../../decorators/public.decorator";
 import { CreateCategoryArgs } from "./CreateCategoryArgs";
 import { UpdateCategoryArgs } from "./UpdateCategoryArgs";
@@ -37,12 +35,8 @@ export class CategoryResolverBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
+  @Public()
   @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "read",
-    possession: "any",
-  })
   async _categoriesMeta(
     @graphql.Args() args: CategoryFindManyArgs
   ): Promise<MetaQueryPayload> {
@@ -56,26 +50,16 @@ export class CategoryResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => [Category])
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "read",
-    possession: "any",
-  })
   async categories(
     @graphql.Args() args: CategoryFindManyArgs
   ): Promise<Category[]> {
     return this.service.findMany(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => Category, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "read",
-    possession: "own",
-  })
   async category(
     @graphql.Args() args: CategoryFindUniqueArgs
   ): Promise<Category | null> {
@@ -86,13 +70,8 @@ export class CategoryResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => Category)
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "create",
-    possession: "any",
-  })
   async createCategory(
     @graphql.Args() args: CreateCategoryArgs
   ): Promise<Category> {
@@ -102,13 +81,8 @@ export class CategoryResolverBase {
     });
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => Category)
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "update",
-    possession: "any",
-  })
   async updateCategory(
     @graphql.Args() args: UpdateCategoryArgs
   ): Promise<Category | null> {
@@ -127,12 +101,8 @@ export class CategoryResolverBase {
     }
   }
 
+  @Public()
   @graphql.Mutation(() => Category)
-  @nestAccessControl.UseRoles({
-    resource: "Category",
-    action: "delete",
-    possession: "any",
-  })
   async deleteCategory(
     @graphql.Args() args: DeleteCategoryArgs
   ): Promise<Category | null> {
