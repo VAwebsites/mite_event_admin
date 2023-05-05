@@ -3,6 +3,7 @@ import { CategoryWhereUniqueInput } from "../category/CategoryWhereUniqueInput";
 import { EventRegistrationCreateNestedManyWithoutEventsInput } from "./EventRegistrationCreateNestedManyWithoutEventsInput";
 
 export type EventCreateInput = {
+  attendanceCode?: string | null;
   branch: BranchWhereUniqueInput;
   category?: CategoryWhereUniqueInput | null;
   description?: string | null;

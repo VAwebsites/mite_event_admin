@@ -3,6 +3,7 @@ import { CategoryWhereUniqueInput } from "../category/CategoryWhereUniqueInput";
 import { EventRegistrationUpdateManyWithoutEventsInput } from "./EventRegistrationUpdateManyWithoutEventsInput";
 
 export type EventUpdateInput = {
+  attendanceCode?: string | null;
   branch?: BranchWhereUniqueInput;
   category?: CategoryWhereUniqueInput | null;
   description?: string | null;

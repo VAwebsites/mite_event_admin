@@ -59,6 +59,8 @@ export class EventControllerBase {
           : undefined,
       },
       select: {
+        attendanceCode: true,
+
         branch: {
           select: {
             id: true,
@@ -98,6 +100,8 @@ export class EventControllerBase {
     return this.service.findMany({
       ...args,
       select: {
+        attendanceCode: true,
+
         branch: {
           select: {
             id: true,
@@ -138,6 +142,8 @@ export class EventControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
+        attendanceCode: true,
+
         branch: {
           select: {
             id: true,
@@ -199,6 +205,8 @@ export class EventControllerBase {
             : undefined,
         },
         select: {
+          attendanceCode: true,
+
           branch: {
             select: {
               id: true,
@@ -248,6 +256,8 @@ export class EventControllerBase {
       return await this.service.delete({
         where: params,
         select: {
+          attendanceCode: true,
+
           branch: {
             select: {
               id: true,

@@ -4,9 +4,9 @@ import {
   Edit,
   SimpleForm,
   EditProps,
+  TextInput,
   ReferenceInput,
   SelectInput,
-  TextInput,
   DateTimeInput,
   ReferenceArrayInput,
   SelectArrayInput,
@@ -20,6 +20,7 @@ export const EventEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
+        <TextInput label="attendance_code" source="attendanceCode" />
         <ReferenceInput source="branch.id" reference="Branch" label="Branch">
           <SelectInput optionText={BranchTitle} />
         </ReferenceInput>

@@ -4,8 +4,8 @@ import {
   Show,
   SimpleShowLayout,
   ShowProps,
-  ReferenceField,
   TextField,
+  ReferenceField,
   DateField,
   ReferenceManyField,
   Datagrid,
@@ -21,6 +21,7 @@ export const EventShow = (props: ShowProps): React.ReactElement => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
+        <TextField label="attendance_code" source="attendanceCode" />
         <ReferenceField label="Branch" source="branch.id" reference="Branch">
           <TextField source={BRANCH_TITLE_FIELD} />
         </ReferenceField>

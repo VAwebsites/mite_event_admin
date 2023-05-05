@@ -11,14 +11,14 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { BranchWhereUniqueInput } from "../../branch/base/BranchWhereUniqueInput";
 import {
-  ValidateNested,
-  IsOptional,
   IsString,
+  IsOptional,
+  ValidateNested,
   IsDate,
   IsEnum,
 } from "class-validator";
+import { BranchWhereUniqueInput } from "../../branch/base/BranchWhereUniqueInput";
 import { Type } from "class-transformer";
 import { CategoryWhereUniqueInput } from "../../category/base/CategoryWhereUniqueInput";
 import { EventRegistrationCreateNestedManyWithoutEventsInput } from "./EventRegistrationCreateNestedManyWithoutEventsInput";
@@ -26,6 +26,17 @@ import { EnumEventEventType } from "./EnumEventEventType";
 
 @InputType()
 class EventCreateInput {
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  attendanceCode?: string | null;
+
   @ApiProperty({
     required: true,
     type: () => BranchWhereUniqueInput,

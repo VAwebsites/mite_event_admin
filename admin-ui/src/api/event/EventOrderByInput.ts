@@ -1,6 +1,7 @@
 import { SortOrder } from "../../util/SortOrder";
 
 export type EventOrderByInput = {
+  attendanceCode?: SortOrder;
   branchId?: SortOrder;
   categoryId?: SortOrder;
   createdAt?: SortOrder;

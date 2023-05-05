@@ -11,11 +11,11 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { BranchWhereUniqueInput } from "../../branch/base/BranchWhereUniqueInput";
-import { ValidateNested, IsOptional, IsEnum } from "class-validator";
-import { Type } from "class-transformer";
-import { CategoryWhereUniqueInput } from "../../category/base/CategoryWhereUniqueInput";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { Type } from "class-transformer";
+import { IsOptional, ValidateNested, IsEnum } from "class-validator";
+import { BranchWhereUniqueInput } from "../../branch/base/BranchWhereUniqueInput";
+import { CategoryWhereUniqueInput } from "../../category/base/CategoryWhereUniqueInput";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { EventRegistrationListRelationFilter } from "../../eventRegistration/base/EventRegistrationListRelationFilter";
 import { EnumEventEventType } from "./EnumEventEventType";
@@ -23,6 +23,17 @@ import { StringFilter } from "../../util/StringFilter";
 
 @InputType()
 class EventWhereInput {
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  attendanceCode?: StringNullableFilter;
+
   @ApiProperty({
     required: false,
     type: () => BranchWhereUniqueInput,
