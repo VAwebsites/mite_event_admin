@@ -68,6 +68,17 @@ class EventRegistrationWhereInput {
 
   @ApiProperty({
     required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  teamMembers?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
     type: () => UserWhereUniqueInput,
   })
   @ValidateNested()

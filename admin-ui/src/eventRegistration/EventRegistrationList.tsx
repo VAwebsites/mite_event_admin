@@ -31,6 +31,7 @@ export const EventRegistrationList = (props: ListProps): React.ReactElement => {
         <TextField label="feedback" source="feedback" />
         <TextField label="ID" source="id" />
         <BooleanField label="isAttended" source="isAttended" />
+        <TextField label="team_members" source="teamMembers" />
         <DateField source="updatedAt" label="Updated At" />
         <ReferenceField label="User" source="user.id" reference="User">
           <TextField source={USER_TITLE_FIELD} />

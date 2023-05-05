@@ -315,6 +315,7 @@ export class EventControllerBase {
         feedback: true,
         id: true,
         isAttended: true,
+        teamMembers: true,
         updatedAt: true,
 
         user: {

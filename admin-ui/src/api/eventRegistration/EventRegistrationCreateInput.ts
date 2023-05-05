@@ -5,5 +5,6 @@ export type EventRegistrationCreateInput = {
   event: EventWhereUniqueInput;
   feedback?: string | null;
   isAttended?: boolean | null;
+  teamMembers?: string | null;
   user: UserWhereUniqueInput;
 };
