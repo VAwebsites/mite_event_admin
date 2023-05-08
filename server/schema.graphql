@@ -2,10 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input BooleanNullableFilter {
+  equals: Boolean
+  not: Boolean
+}
+
 type Branch {
   createdAt: DateTime!
   events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
   id: String!
+  img: String
   name: String!
   updatedAt: DateTime!
   users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
@@ -13,6 +19,7 @@ type Branch {
 
 input BranchCreateInput {
   events: EventCreateNestedManyWithoutBranchesInput
+  img: String
   name: String!
   users: UserCreateNestedManyWithoutBranchesInput
 }
@@ -20,12 +27,14 @@ input BranchCreateInput {
 input BranchOrderByInput {
   createdAt: SortOrder
   id: SortOrder
+  img: SortOrder
   name: SortOrder
   updatedAt: SortOrder
 }
 
 input BranchUpdateInput {
   events: EventUpdateManyWithoutBranchesInput
+  img: String
   name: String
   users: UserUpdateManyWithoutBranchesInput
 }
@@ -33,11 +42,47 @@ input BranchUpdateInput {
 input BranchWhereInput {
   events: EventListRelationFilter
   id: StringFilter
+  img: StringNullableFilter
   name: StringFilter
   users: UserListRelationFilter
 }
 
 input BranchWhereUniqueInput {
+  id: String!
+}
+
+type Category {
+  createdAt: DateTime!
+  events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
+  id: String!
+  name: String!
+  updatedAt: DateTime!
+}
+
+input CategoryCreateInput {
+  events: EventCreateNestedManyWithoutCategoriesInput
+  name: String!
+}
+
+input CategoryOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  name: SortOrder
+  updatedAt: SortOrder
+}
+
+input CategoryUpdateInput {
+  events: EventUpdateManyWithoutCategoriesInput
+  name: String
+}
+
+input CategoryWhereInput {
+  events: EventListRelationFilter
+  id: StringFilter
+  name: StringFilter
+}
+
+input CategoryWhereUniqueInput {
   id: String!
 }
 
@@ -62,20 +107,28 @@ input DateTimeNullableFilter {
   notIn: [DateTime!]
 }
 
+enum EnumEventEventType {
+  Individual
+  Team
+}
+
 enum EnumUserGender {
   Female
   Male
 }
 
 type Event {
+  attendanceCode: String
   branch: Branch
+  category: Category
   createdAt: DateTime!
   description: String
   endDate: DateTime
   eventRegistrations(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): [EventRegistration!]!
-  feedbacks(orderBy: [FeedbackOrderByInput!], skip: Float, take: Float, where: FeedbackWhereInput): [Feedback!]!
+  eventType: EnumEventEventType
   id: String!
   img: String
+  registrationEndDate: DateTime
   startDate: DateTime
   title: String
   updatedAt: DateTime!
@@ -83,18 +136,25 @@ type Event {
 }
 
 input EventCreateInput {
+  attendanceCode: String
   branch: BranchWhereUniqueInput!
+  category: CategoryWhereUniqueInput
   description: String
   endDate: DateTime
   eventRegistrations: EventRegistrationCreateNestedManyWithoutEventsInput
-  feedbacks: FeedbackCreateNestedManyWithoutEventsInput
+  eventType: EnumEventEventType
   img: String
+  registrationEndDate: DateTime
   startDate: DateTime
   title: String
   venue: String
 }
 
 input EventCreateNestedManyWithoutBranchesInput {
+  connect: [EventWhereUniqueInput!]
+}
+
+input EventCreateNestedManyWithoutCategoriesInput {
   connect: [EventWhereUniqueInput!]
 }
 
@@ -105,12 +165,16 @@ input EventListRelationFilter {
 }
 
 input EventOrderByInput {
+  attendanceCode: SortOrder
   branchId: SortOrder
+  categoryId: SortOrder
   createdAt: SortOrder
   description: SortOrder
   endDate: SortOrder
+  eventType: SortOrder
   id: SortOrder
   img: SortOrder
+  registrationEndDate: SortOrder
   startDate: SortOrder
   title: SortOrder
   updatedAt: SortOrder
@@ -120,13 +184,19 @@ input EventOrderByInput {
 type EventRegistration {
   createdAt: DateTime!
   event: Event
+  feedback: String
   id: String!
+  isAttended: Boolean
+  teamMembers: String
   updatedAt: DateTime!
   user: User
 }
 
 input EventRegistrationCreateInput {
   event: EventWhereUniqueInput!
+  feedback: String
+  isAttended: Boolean
+  teamMembers: String
   user: UserWhereUniqueInput!
 }
 
@@ -147,13 +217,19 @@ input EventRegistrationListRelationFilter {
 input EventRegistrationOrderByInput {
   createdAt: SortOrder
   eventId: SortOrder
+  feedback: SortOrder
   id: SortOrder
+  isAttended: SortOrder
+  teamMembers: SortOrder
   updatedAt: SortOrder
   userId: SortOrder
 }
 
 input EventRegistrationUpdateInput {
   event: EventWhereUniqueInput
+  feedback: String
+  isAttended: Boolean
+  teamMembers: String
   user: UserWhereUniqueInput
 }
 
@@ -171,7 +247,10 @@ input EventRegistrationUpdateManyWithoutUsersInput {
 
 input EventRegistrationWhereInput {
   event: EventWhereUniqueInput
+  feedback: StringNullableFilter
   id: StringFilter
+  isAttended: BooleanNullableFilter
+  teamMembers: StringNullableFilter
   user: UserWhereUniqueInput
 }
 
@@ -180,12 +259,15 @@ input EventRegistrationWhereUniqueInput {
 }
 
 input EventUpdateInput {
+  attendanceCode: String
   branch: BranchWhereUniqueInput
+  category: CategoryWhereUniqueInput
   description: String
   endDate: DateTime
   eventRegistrations: EventRegistrationUpdateManyWithoutEventsInput
-  feedbacks: FeedbackUpdateManyWithoutEventsInput
+  eventType: EnumEventEventType
   img: String
+  registrationEndDate: DateTime
   startDate: DateTime
   title: String
   venue: String
@@ -197,72 +279,29 @@ input EventUpdateManyWithoutBranchesInput {
   set: [EventWhereUniqueInput!]
 }
 
+input EventUpdateManyWithoutCategoriesInput {
+  connect: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+}
+
 input EventWhereInput {
+  attendanceCode: StringNullableFilter
   branch: BranchWhereUniqueInput
+  category: CategoryWhereUniqueInput
   description: StringNullableFilter
   endDate: DateTimeNullableFilter
   eventRegistrations: EventRegistrationListRelationFilter
-  feedbacks: FeedbackListRelationFilter
+  eventType: EnumEventEventType
   id: StringFilter
   img: StringNullableFilter
+  registrationEndDate: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
   title: StringNullableFilter
   venue: StringNullableFilter
 }
 
 input EventWhereUniqueInput {
-  id: String!
-}
-
-type Feedback {
-  createdAt: DateTime!
-  event: Event
-  id: String!
-  message: String!
-  updatedAt: DateTime!
-}
-
-input FeedbackCreateInput {
-  event: EventWhereUniqueInput
-  message: String!
-}
-
-input FeedbackCreateNestedManyWithoutEventsInput {
-  connect: [FeedbackWhereUniqueInput!]
-}
-
-input FeedbackListRelationFilter {
-  every: FeedbackWhereInput
-  none: FeedbackWhereInput
-  some: FeedbackWhereInput
-}
-
-input FeedbackOrderByInput {
-  createdAt: SortOrder
-  eventId: SortOrder
-  id: SortOrder
-  message: SortOrder
-  updatedAt: SortOrder
-}
-
-input FeedbackUpdateInput {
-  event: EventWhereUniqueInput
-  message: String
-}
-
-input FeedbackUpdateManyWithoutEventsInput {
-  connect: [FeedbackWhereUniqueInput!]
-  disconnect: [FeedbackWhereUniqueInput!]
-  set: [FeedbackWhereUniqueInput!]
-}
-
-input FeedbackWhereInput {
-  event: EventWhereUniqueInput
-  id: StringFilter
-  message: StringFilter
-}
-
-input FeedbackWhereUniqueInput {
   id: String!
 }
 
@@ -277,37 +316,37 @@ type MetaQueryPayload {
 
 type Mutation {
   createBranch(data: BranchCreateInput!): Branch!
+  createCategory(data: CategoryCreateInput!): Category!
   createEvent(data: EventCreateInput!): Event!
   createEventRegistration(data: EventRegistrationCreateInput!): EventRegistration!
-  createFeedback(data: FeedbackCreateInput!): Feedback!
   createUser(data: UserCreateInput!): User!
   deleteBranch(where: BranchWhereUniqueInput!): Branch!
+  deleteCategory(where: CategoryWhereUniqueInput!): Category!
   deleteEvent(where: EventWhereUniqueInput!): Event!
   deleteEventRegistration(where: EventRegistrationWhereUniqueInput!): EventRegistration!
-  deleteFeedback(where: FeedbackWhereUniqueInput!): Feedback!
   deleteUser(where: UserWhereUniqueInput!): User!
   login(credentials: Credentials!): UserInfo!
   updateBranch(data: BranchUpdateInput!, where: BranchWhereUniqueInput!): Branch!
+  updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category!
   updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event!
   updateEventRegistration(data: EventRegistrationUpdateInput!, where: EventRegistrationWhereUniqueInput!): EventRegistration!
-  updateFeedback(data: FeedbackUpdateInput!, where: FeedbackWhereUniqueInput!): Feedback!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
 }
 
 type Query {
   _branchesMeta(orderBy: [BranchOrderByInput!], skip: Float, take: Float, where: BranchWhereInput): MetaQueryPayload!
+  _categoriesMeta(orderBy: [CategoryOrderByInput!], skip: Float, take: Float, where: CategoryWhereInput): MetaQueryPayload!
   _eventRegistrationsMeta(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): MetaQueryPayload!
   _eventsMeta(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): MetaQueryPayload!
-  _feedbacksMeta(orderBy: [FeedbackOrderByInput!], skip: Float, take: Float, where: FeedbackWhereInput): MetaQueryPayload!
   _usersMeta(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): MetaQueryPayload!
   branch(where: BranchWhereUniqueInput!): Branch
   branches(orderBy: [BranchOrderByInput!], skip: Float, take: Float, where: BranchWhereInput): [Branch!]!
+  categories(orderBy: [CategoryOrderByInput!], skip: Float, take: Float, where: CategoryWhereInput): [Category!]!
+  category(where: CategoryWhereUniqueInput!): Category
   event(where: EventWhereUniqueInput!): Event
   eventRegistration(where: EventRegistrationWhereUniqueInput!): EventRegistration
   eventRegistrations(orderBy: [EventRegistrationOrderByInput!], skip: Float, take: Float, where: EventRegistrationWhereInput): [EventRegistration!]!
   events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
-  feedback(where: FeedbackWhereUniqueInput!): Feedback
-  feedbacks(orderBy: [FeedbackOrderByInput!], skip: Float, take: Float, where: FeedbackWhereInput): [Feedback!]!
   user(where: UserWhereUniqueInput!): User
   userInfo: UserInfo!
   users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
