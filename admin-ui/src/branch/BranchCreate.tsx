@@ -4,9 +4,9 @@ import {
   Create,
   SimpleForm,
   CreateProps,
+  TextInput,
   ReferenceArrayInput,
   SelectArrayInput,
-  TextInput,
 } from "react-admin";
 
 import { EventTitle } from "../event/EventTitle";
@@ -16,6 +16,7 @@ export const BranchCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
+        <TextInput label="Association Name" source="associationName" />
         <ReferenceArrayInput
           source="events"
           reference="Event"

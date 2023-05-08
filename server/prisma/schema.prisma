@@ -26,13 +26,14 @@ model User {
 }
 
 model Branch {
-  createdAt DateTime @default(now())
-  events    Event[]
-  id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
-  img       String?
-  name      String
-  updatedAt DateTime @updatedAt
-  users     User[]
+  associationName String?
+  createdAt       DateTime @default(now())
+  events          Event[]
+  id              String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  img             String?
+  name            String
+  updatedAt       DateTime @updatedAt
+  users           User[]
 }
 
 model Event {

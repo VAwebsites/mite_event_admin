@@ -4,9 +4,9 @@ import {
   Edit,
   SimpleForm,
   EditProps,
+  TextInput,
   ReferenceArrayInput,
   SelectArrayInput,
-  TextInput,
 } from "react-admin";
 
 import { EventTitle } from "../event/EventTitle";
@@ -16,6 +16,7 @@ export const BranchEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
+        <TextInput label="Association Name" source="associationName" />
         <ReferenceArrayInput
           source="events"
           reference="Event"
