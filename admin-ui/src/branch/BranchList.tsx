@@ -12,12 +12,13 @@ export const BranchList = (props: ListProps): React.ReactElement => {
       pagination={<Pagination />}
     >
       <Datagrid rowClick="show">
-        <TextField label="Association Name" source="associationName" />
+ 
         <DateField source="createdAt" label="Created At" />
-        <TextField label="ID" source="id" />
-        <TextField label="img" source="img" />
+        {/* <TextField label="ID" source="id" /> */}
+        {/* <TextField label="img" source="img" /> */}
         <TextField label="Name" source="name" />
-        <DateField source="updatedAt" label="Updated At" />
+        <TextField label="Association Name" source="associationName" />
+        {/* <DateField source="updatedAt" label="Updated At" /> */}
       </Datagrid>
     </List>
   );

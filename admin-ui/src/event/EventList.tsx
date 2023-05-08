@@ -6,6 +6,7 @@ import {
   TextField,
   ReferenceField,
   DateField,
+  ImageField
 } from "react-admin";
 import Pagination from "../Components/Pagination";
 import { BRANCH_TITLE_FIELD } from "../branch/BranchTitle";
@@ -21,7 +22,11 @@ export const EventList = (props: ListProps): React.ReactElement => {
       pagination={<Pagination />}
     >
       <Datagrid rowClick="show">
-        <TextField label="attendance_code" source="attendanceCode" />
+        {/* <TextField label="attendance_code" source="attendanceCode" /> */}
+    
+        <ImageField source="img" title="img" className="img-fluid"/>
+      
+        <TextField label="Title" source="title" />
         <ReferenceField label="Branch" source="branch.id" reference="Branch">
           <TextField source={BRANCH_TITLE_FIELD} />
         </ReferenceField>
@@ -32,17 +37,19 @@ export const EventList = (props: ListProps): React.ReactElement => {
         >
           <TextField source={CATEGORY_TITLE_FIELD} />
         </ReferenceField>
-        <DateField source="createdAt" label="Created At" />
-        <TextField label="Description" source="description" />
-        <TextField label="End date" source="endDate" />
+        {/* <TextField label="Description" source="description" /> */}
+     
         <TextField label="Event Type" source="eventType" />
-        <TextField label="ID" source="id" />
-        <TextField label="img" source="img" />
-        <TextField label="Registration End Date" source="registrationEndDate" />
-        <TextField label="Start date" source="startDate" />
-        <TextField label="Title" source="title" />
-        <DateField source="updatedAt" label="Updated At" />
-        <TextField label="Venue" source="venue" />
+        {/* <TextField label="ID" source="id" /> */}
+        {/* <TextField label="img" source="img" /> */}
+
+        {/* <TextField label="Registration End Date" source="registrationEndDate" /> */}
+        <DateField locales="fr-FR"  label="Start date" source="startDate" />
+        <DateField locales="fr-FR"  label="End date" source="endDate" />
+        {/* <TextField label="Venue" source="venue" /> */}
+        {/* <DateField source="updatedAt" label="Updated At" /> */}
+        <DateField source="createdAt" label="Created At" locales="fr-FR"   />
+
       </Datagrid>
     </List>
   );

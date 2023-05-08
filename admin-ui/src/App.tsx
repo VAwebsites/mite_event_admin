@@ -57,6 +57,7 @@ const App = (): React.ReactElement => {
           edit={UserEdit}
           create={UserCreate}
           show={UserShow}
+          options={{ label: 'Event Managers' }} 
         />
         <Resource
           name="Branch"
