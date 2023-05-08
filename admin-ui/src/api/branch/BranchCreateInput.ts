@@ -2,6 +2,7 @@ import { EventCreateNestedManyWithoutBranchesInput } from "./EventCreateNestedMa
 import { UserCreateNestedManyWithoutBranchesInput } from "./UserCreateNestedManyWithoutBranchesInput";
 
 export type BranchCreateInput = {
+  associationName?: string | null;
   events?: EventCreateNestedManyWithoutBranchesInput;
   img?: string | null;
   name: string;

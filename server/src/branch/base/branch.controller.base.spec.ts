@@ -19,6 +19,7 @@ import { BranchService } from "../branch.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
+  associationName: "exampleAssociationName",
   createdAt: new Date(),
   id: "exampleId",
   img: "exampleImg",
@@ -26,6 +27,7 @@ const CREATE_INPUT = {
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
+  associationName: "exampleAssociationName",
   createdAt: new Date(),
   id: "exampleId",
   img: "exampleImg",
@@ -34,6 +36,7 @@ const CREATE_RESULT = {
 };
 const FIND_MANY_RESULT = [
   {
+    associationName: "exampleAssociationName",
     createdAt: new Date(),
     id: "exampleId",
     img: "exampleImg",
@@ -42,6 +45,7 @@ const FIND_MANY_RESULT = [
   },
 ];
 const FIND_ONE_RESULT = {
+  associationName: "exampleAssociationName",
   createdAt: new Date(),
   id: "exampleId",
   img: "exampleImg",

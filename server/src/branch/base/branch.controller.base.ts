@@ -50,6 +50,7 @@ export class BranchControllerBase {
     return await this.service.create({
       data: data,
       select: {
+        associationName: true,
         createdAt: true,
         id: true,
         img: true,
@@ -71,6 +72,7 @@ export class BranchControllerBase {
     return this.service.findMany({
       ...args,
       select: {
+        associationName: true,
         createdAt: true,
         id: true,
         img: true,
@@ -93,6 +95,7 @@ export class BranchControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
+        associationName: true,
         createdAt: true,
         id: true,
         img: true,
@@ -124,6 +127,7 @@ export class BranchControllerBase {
         where: params,
         data: data,
         select: {
+          associationName: true,
           createdAt: true,
           id: true,
           img: true,
@@ -155,6 +159,7 @@ export class BranchControllerBase {
       return await this.service.delete({
         where: params,
         select: {
+          associationName: true,
           createdAt: true,
           id: true,
           img: true,

@@ -1,9 +1,10 @@
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { EventListRelationFilter } from "../event/EventListRelationFilter";
 import { StringFilter } from "../../util/StringFilter";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { UserListRelationFilter } from "../user/UserListRelationFilter";
 
 export type BranchWhereInput = {
+  associationName?: StringNullableFilter;
   events?: EventListRelationFilter;
   id?: StringFilter;
   img?: StringNullableFilter;
