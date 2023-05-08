@@ -20,20 +20,27 @@ export const UserList = (props: ListProps): React.ReactElement => {
       pagination={<Pagination />}
     >
       <Datagrid rowClick="show">
+     
+        <TextField label="First Name" source="firstName" />
+        <TextField label="Last Name" source="lastName" />
+        <TextField label="Email" source="email" />
+        <TextField label="Username" source="username" />
+      
+   
+        <TextField label="Gender" source="gender" />
         <ReferenceField label="Branch" source="branch.id" reference="Branch">
           <TextField source={BRANCH_TITLE_FIELD} />
         </ReferenceField>
         <DateField source="createdAt" label="Created At" />
-        <TextField label="Email" source="email" />
-        <TextField label="First Name" source="firstName" />
-        <TextField label="Gender" source="gender" />
-        <TextField label="ID" source="id" />
-        <TextField label="Last Name" source="lastName" />
-        <TextField label="Profile Path" source="profilePath" />
-        <TextField label="Roles" source="roles" />
-        <DateField source="updatedAt" label="Updated At" />
-        <TextField label="Username" source="username" />
-        <TextField label="USN" source="usn" />
+    
+        
+        {/* <TextField label="ID" source="id" /> */}
+    
+        {/* <TextField label="Profile Path" source="profilePath" /> */}
+        {/* <TextField label="Roles" source="roles" /> */}
+        {/* <DateField source="updatedAt" label="Updated At" /> */}
+      
+        {/* <TextField label="USN" source="usn" /> */}
       </Datagrid>
     </List>
   );
