@@ -27,11 +27,11 @@ const Login = ({ theme }: any) => {
         <div className={`${CLASS_NAME}__wrapper`}>
          
           <div className={`${CLASS_NAME}__box`}>
-            <img
+            {/* <img
               src="https://amplication.com/assets/react-admin.png"
               alt="React-Admin"
-            />
-            <h2>Admin UI</h2>
+            /> */}
+            <h2>Super Admin</h2>
            
             <form onSubmit={submit}>
               <label>
@@ -59,25 +59,7 @@ const Login = ({ theme }: any) => {
               </Button>
             </form>
           </div>
-          <div className={`${CLASS_NAME}__box`}>
-            <img
-              src="https://amplication.com/assets/restapi.png"
-              alt="REST API"
-            />
-            <h2>Connect via REST API</h2>
-            <div className={`${CLASS_NAME}__box__message`}>
-              Connect to the server using REST API with a built-in Swagger
-              documentation
-            </div>
-            <Button
-              type="button"
-              variant="contained"
-              color="primary"
-              href={`${BASE_URI}/api`}
-            >
-              Continue
-            </Button>
-          </div>
+       
 
           <Notification />
         </div>
