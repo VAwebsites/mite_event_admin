@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useState} from "react";
 
 import {
   Edit,
@@ -9,10 +10,24 @@ import {
   SelectArrayInput,
 } from "react-admin";
 
+import ImageUpload from './ImageUpload'
 import { EventTitle } from "../event/EventTitle";
 import { UserTitle } from "../user/UserTitle";
 
 export const BranchEdit = (props: EditProps): React.ReactElement => {
+  
+  const [imgUrl, setImgUrl] = useState<string>('');
+
+  const handleUpload = (url: string) => {
+    // Do something with the uploaded file URL
+    console.log(url);
+    setImgUrl(url);
+ 
+
+    // update the record with the new image URL // update the record with the new image URL
+  };
+
+
   return (
     <Edit {...props}>
       <SimpleForm>
@@ -25,7 +40,11 @@ export const BranchEdit = (props: EditProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={EventTitle} />
         </ReferenceArrayInput>
-        <TextInput label="img" source="img" />
+        {imgUrl ? (
+        <TextInput source="img" label="Branch logo" defaultValue={imgUrl} />
+      ) : (
+        <ImageUpload onUpload={handleUpload} />
+      )}
         <TextInput label="Name" source="name" />
         <ReferenceArrayInput
           source="users"

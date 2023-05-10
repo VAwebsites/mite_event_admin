@@ -8,6 +8,7 @@ input BooleanNullableFilter {
 }
 
 type Branch {
+  associationName: String
   createdAt: DateTime!
   events(orderBy: [EventOrderByInput!], skip: Float, take: Float, where: EventWhereInput): [Event!]!
   id: String!
@@ -18,6 +19,7 @@ type Branch {
 }
 
 input BranchCreateInput {
+  associationName: String
   events: EventCreateNestedManyWithoutBranchesInput
   img: String
   name: String!
@@ -25,6 +27,7 @@ input BranchCreateInput {
 }
 
 input BranchOrderByInput {
+  associationName: SortOrder
   createdAt: SortOrder
   id: SortOrder
   img: SortOrder
@@ -33,6 +36,7 @@ input BranchOrderByInput {
 }
 
 input BranchUpdateInput {
+  associationName: String
   events: EventUpdateManyWithoutBranchesInput
   img: String
   name: String
@@ -40,6 +44,7 @@ input BranchUpdateInput {
 }
 
 input BranchWhereInput {
+  associationName: StringNullableFilter
   events: EventListRelationFilter
   id: StringFilter
   img: StringNullableFilter
